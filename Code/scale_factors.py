@@ -91,3 +91,11 @@ class Distance(Enum):
     CENTIMETERS = -2    # cm    = 1E-02
     MILLIMETERS = -3    # mm    = 1E-03
     KILOMETERS = 3      # Km    = 1E+03
+
+
+# Time
+class Time(Enum):
+    """Defines the scale factors for time (Seconds - s)."""
+    SECONDS = 1         # s     = 1E+01
+    MILLISECONDS = -3   # ms    = 1E-03
+    MICROSECONDS = -6   # µs    = 1E-06
