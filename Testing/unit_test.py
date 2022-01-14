@@ -66,11 +66,19 @@ class Test_electronics_calculator(unittest.TestCase):
     def test_total_parallel_capacitance(self):
         self.assertEqual(ec.total_parallel_capacitance((0.000004, 0.000003, 0.000002, 0.000001)), 0.00001)
 
-    def test_reactance_capacitive(self):
-        self.assertEqual(round(ec.reactance_capacitive(1000, 0.0000001), 2), 1591.55)
+    def test_total_parallel_inductance(self):
+        self.assertEqual(round(ec.total_parallel_inductance((0.004, 0.003, 0.002, 0.001)), 5), 0.00048)
 
     def test_frequency_from_capacitance(self):
         self.assertEqual(round(ec.frequency_from_capacitance(0.0000001, 1591.55), 2), 1000.00)
+
+    def test_capacitance_from_frequency(self):
+        self.assertEqual(round(ec.capacitance_from_frequency(1.0, 100.00), 4), 0.0016)
+
+    def test_reactance_capacitive(self):
+        self.assertEqual(round(ec.reactance_capacitive(1000, 0.0000001), 2), 1591.55)
+
+
 
 
 if __name__ == '__main__':

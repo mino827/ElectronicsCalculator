@@ -116,8 +116,8 @@ def total_series_capacitance(capacitances: tuple) -> float:
 
 
 def total_series_inductance(inductances: tuple) -> float:
-    """Takes a tuple of all inductance measurements (Henrys) in a
-    series circuit and returns the total inductance (Henrys)."""
+    """Takes a tuple of all inductance measurements (Henries) in a
+    series circuit and returns the total inductance (Henries)."""
     return _sums(inductances)
 
 
@@ -149,8 +149,8 @@ def total_parallel_capacitance(capacitances: tuple) -> float:
 
 
 def total_parallel_inductance(inductances: tuple) -> float:
-    """Takes a tuple of all inductance measurements (Henrys) in a
-    parallel circuit and returns the total inductance (Henrys)."""
+    """Takes a tuple of all inductance measurements (Henries) in a
+    parallel circuit and returns the total inductance (Henries)."""
     return _inverse_sums(inductances)
 
 
@@ -162,7 +162,7 @@ def frequency_from_capacitance(capacitance: float, capacitive_reactance: float) 
     return _inverse_tau(capacitance, capacitive_reactance)
 
 
-def capacitance(frequency: float, capacitive_reactance: float) -> float:
+def capacitance_from_frequency(frequency: float, capacitive_reactance: float) -> float:
     """Calculates capacitance (Farads) when frequency (Hertz) and capacitive reactance (Ohms) are known."""
     return _inverse_tau(frequency, capacitive_reactance)
 
@@ -173,7 +173,7 @@ def reactance_capacitive(frequency: float, capacitance: float) -> float:
 
 
 def reactance_inductive(frequency: float, inductance: float) -> float:
-    """Calculates inductive reactance (Ohms) when frequency (Hertz) and inductance (Henrys) are known."""
+    """Calculates inductive reactance (Ohms) when frequency (Hertz) and inductance (Henries) are known."""
     return _tau(frequency, inductance)
 
 
@@ -207,67 +207,67 @@ def antenna_length_full_wave(frequency: float) -> float:
 
 
 def voltage_rms_from_peak(peak_voltage: float) -> float:
-    """Calculates AC rms voltage (Volts) from peak voltage (Volts)."""
+    """Calculates AC rms voltage (Volts, sine) from peak voltage (Volts)."""
     return (1 / math.sqrt(2)) * peak_voltage
 
 
 def voltage_rms_from_peak_to_peak(peak_to_peak_voltage: float) -> float:
-    """Calculates AC rms voltage (Volts) from peak to peak voltage (Volts)."""
+    """Calculates AC rms voltage (Volts, sine) from peak to peak voltage (Volts)."""
     return (1 / (2 * math.sqrt(2))) * peak_to_peak_voltage
 
 
 def voltage_rms_from_average(average_voltage: float) -> float:
-    """Calculates AC rms voltage (Volts) from average voltage (Volts)."""
+    """Calculates AC rms voltage (Volts, sine) from average voltage (Volts)."""
     return (PI / (2 * math.sqrt(2))) * average_voltage
 
 
 def voltage_average_from_peak(peak_voltage: float) -> float:
-    """Calculates AC average voltage (Volts) from peak voltage (Volts)."""
+    """Calculates AC average voltage (Volts, sine) from peak voltage (Volts)."""
     return (2 * peak_voltage) / PI
 
 
 def voltage_average_from_peak_to_peak(peak_to_peak_voltage: float) -> float:
-    """Calculates AC average voltage (Volts) from peak to peak voltage (Volts)."""
+    """Calculates AC average voltage (Volts, sine) from peak to peak voltage (Volts)."""
     return peak_to_peak_voltage / PI
 
 
 def voltage_average_from_rms(rms_voltage: float) -> float:
-    """Calculates AC average voltage (Volts) from rms voltage (Volts)."""
+    """Calculates AC average voltage (Volts, sine) from rms voltage (Volts)."""
     return rms_voltage * ((2 * math.sqrt(2)) / PI)
 
 
 def voltage_peak_from_peak_to_peak(peak_to_peak_voltage: float) -> float:
-    """Calculates AC peak voltage (Volts) from peak to peak voltage (Volts)."""
+    """Calculates AC peak voltage (Volts, sine) from peak to peak voltage (Volts)."""
     return peak_to_peak_voltage * 0.5
 
 
 def voltage_peak_from_rms(rms_voltage: float) -> float:
-    """Calculates AC peak voltage (Volts) from rms voltage (Volts)."""
+    """Calculates AC peak voltage (Volts, sine) from rms voltage (Volts)."""
     return rms_voltage * math.sqrt(2)
 
 
 def voltage_peak_from_average(average_voltage: float) -> float:
-    """Calculates AC peak voltage (Volts) from average voltage (Volts)."""
+    """Calculates AC peak voltage (Volts, sine) from average voltage (Volts)."""
     return average_voltage * (PI / 2)
 
 
 def voltage_peak_to_peak_from_average(average_voltage: float) -> float:
-    """Calculates AC peak to peak voltage (Volts) from average voltage (Volts)."""
+    """Calculates AC peak to peak voltage (Volts, sine) from average voltage (Volts)."""
     return average_voltage * PI
 
 
 def voltage_peak_to_peak_from_rms(rms_voltage: float) -> float:
-    """Calculates AC peak to peak voltage (Volts) from rms voltage (Volts)."""
+    """Calculates AC peak to peak voltage (Volts, sine) from rms voltage (Volts)."""
     return rms_voltage * (2 * math.sqrt(2))
 
 
 def voltage_peak_to_peak_from_peak(peak_voltage: float) -> float:
-    """Calculates AC peak to peak voltage (Volts) from peak voltage (Volts)."""
+    """Calculates AC peak to peak voltage (Volts, sine) from peak voltage (Volts)."""
     return peak_voltage * 2
 
 
 def impedance(resistance: float, capacitive_reactance: float, inductive_reactance: float) -> float:
-    """Calculate impedance (Ohms) given resistance (Ohms) and reactance (Ohms) values."""
+    """Calculate impedance (Ohms) given resistance (Ohms) and reactance (Ohms) vectors."""
     return math.sqrt(pow(resistance, 2) + pow(inductive_reactance - capacitive_reactance, 2))
 
 
