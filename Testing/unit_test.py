@@ -1,5 +1,5 @@
 import unittest
-import electronics_calculator as ec
+from Code import electronics_calculator as ec
 
 
 class Test_electronics_calculator(unittest.TestCase):
