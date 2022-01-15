@@ -9,7 +9,6 @@
 
 import math
 
-
 # ========= #
 # CONSTANTS #
 # ========= #
@@ -82,6 +81,12 @@ def resistance(power: float = 0.0, current: float = 0.0, voltage: float = 0.0) -
         retval = voltage / current
 
     return retval
+
+
+def voltage_divider_output_r(voltage_in: float, resistance_1: float, resistance_2: float) -> float:
+    """Calculates output voltage: Vout (Volts) given input voltage: Vin (Volts) and
+    two resistor values: R1 & R2 (Ohms)."""
+    return voltage_in * (resistance_2 / (resistance_1 + resistance_2))
 
 
 # ========================================================= #
@@ -188,10 +193,12 @@ def reactance_inductive(frequency: float, inductance: float) -> float:
 
 
 def back_emf(inductance: float, current_t1: float, current_t2: float, time: float) -> float:
-    """Calculates back EMF (Volts) when current stops flowing in an inductor. \n
+    """Calculates back EMF (Volts) when current stops flowing in an inductor. Large voltages tend to get produced
+    which can damage components unless sufficient diodes are used to protect the circuits.\n
     Inputs: inductance (Henries); current_t1: current at time 1 (Amperes); current_t2: current at time 2 (Amperes);
     time: the time it took from t1 to t2 (Seconds)"""
     return -inductance * ((current_t2 - current_t1) / time)
+
 
 def wavelength(frequency: float) -> float:
     """Calculates wavelength (Meters) from frequency (Hertz)."""
@@ -204,22 +211,11 @@ def frequency_from_wavelength(wavelength: float) -> float:
 
 
 def antenna_length_quarter_wave(frequency: float) -> float:
-    """Calculates optimal quarter-wave antenna length (Meters) to receive input frequency (Hertz)."""
+    """Calculates optimal quarter wave antenna length (Meters) to receive input frequency (Hertz).\n
+    This is useful when designing dipole antennae"""
     wl = wavelength(frequency)
 
     return wl / 4.0
-
-
-def antenna_length_half_wave(frequency: float) -> float:
-    """Calculates optimal half-wave antenna length (Meters) to receive input frequency (Hertz)."""
-    wl = wavelength(frequency)
-    return wl / 2.0
-
-
-def antenna_length_full_wave(frequency: float) -> float:
-    """Calculates optimal full-wave antenna length (Meters) to receive input frequency (Hertz)."""
-    wl = wavelength(frequency)
-    return wl
 
 
 def voltage_rms_from_peak(peak_voltage: float) -> float:
@@ -282,8 +278,14 @@ def voltage_peak_to_peak_from_peak(peak_voltage: float) -> float:
     return peak_voltage * 2
 
 
-def impedance(resistance: float, capacitive_reactance: float, inductive_reactance: float) -> float:
-    """Calculate impedance (Ohms) given resistance (Ohms) and reactance (Ohms) vectors."""
+def impedance_rc(resistance: float, capacitive_reactance: float) -> float:
+    """Calculate impedance (Ohms) given resistance (Ohms) and capacitive reactance (Ohms)."""
+    return math.sqrt(pow(resistance, 2) + pow(capacitive_reactance, 2))
+
+
+def impedance_rcl(resistance: float, capacitive_reactance: float, inductive_reactance: float) -> float:
+    """Calculate impedance (Ohms) given resistance (Ohms), capacitive reactance (Ohms) and
+    inducttive reactance (Ohms) vectors."""
     return math.sqrt(pow(resistance, 2) + pow(inductive_reactance - capacitive_reactance, 2))
 
 
@@ -345,4 +347,6 @@ def _tau(item_a: float, item_b: float) -> float:
 
 def _inverse_tau(item_a: float, item_b: float) -> float:
     """Returns the inverse of 2 * PI times the inputs."""
-    return 1 / (2 * PI * item_a * item_b)
+    tau = _tau(item_a, item_b)
+
+    return 1 / tau

@@ -39,6 +39,9 @@ class Test_electronics_calculator(unittest.TestCase):
     def test_resistance_ei(self):
         self.assertEqual(round(ec.resistance(voltage=3.0, current=2.0), 2), 1.5)
 
+    def test_voltage_divider_output_r(self):
+        self.assertEqual(round(ec.voltage_divider_output_r(5.0, 1000.0, 2000.0), 2), 3.33)
+
     def test_total_series_current(self):
         self.assertEqual(round(ec.total_series_current((2.0, 2.0, 2.0, 2.0)), 2), 2.0)
 
@@ -49,7 +52,12 @@ class Test_electronics_calculator(unittest.TestCase):
         self.assertEqual(round(ec.total_series_voltage((3.0, 2.0, 3.0, 4.0)), 2), 12.0)
 
     def test_total_series_capacitance(self):
-        self.assertEqual(ec.total_series_capacitance((0.000001, 0.0000047, 0.0000000004)), 3.9980605153244808901213879224546e-10)
+        self.assertEqual(
+            ec.total_series_capacitance(
+                (0.000001, 0.0000047, 0.0000000004)
+            ),
+            3.9980605153244808901213879224546e-10
+        )
 
     def test_total_series_inductance(self):
         self.assertEqual(ec.total_series_inductance((0.0001, 0.0047, 0.0003)), 0.0051)
@@ -89,6 +97,22 @@ class Test_electronics_calculator(unittest.TestCase):
 
     def test_back_emf(self):
         self.assertEqual(round(ec.back_emf(0.2, 2.0, 0.0, 0.01), 2), 40.00)
+
+    def test_wavelength(self):
+        self.assertEqual(round(ec.wavelength(2400000), 2), 125.00)
+
+    def test_frequency_from_wavelength(self):
+        self.assertEqual(round(ec.frequency_from_wavelength(125.00), 2), 2400000.00)
+
+    def test_antenna_length_quarter_wave(self):
+        self.assertEqual(round(ec.antenna_length_quarter_wave(2400000), 2), 31.25)
+
+    def test_voltage_rms_from_peak(self):
+        self.assertEqual(round(ec.voltage_rms_from_peak(339.41), 2), 240.0)
+
+    def test_voltage_rms_from_peak_to_peak(self):
+        self.assertEqual(round(ec.voltage_rms_from_peak_to_peak(678.8225), 2), 240.0)
+
 
 if __name__ == '__main__':
     unittest.main()
