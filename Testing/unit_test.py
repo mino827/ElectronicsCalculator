@@ -78,8 +78,17 @@ class Test_electronics_calculator(unittest.TestCase):
     def test_reactance_capacitive(self):
         self.assertEqual(round(ec.reactance_capacitive(1000, 0.0000001), 2), 1591.55)
 
+    def test_frequency_from_inductance(self):
+        self.assertEqual(round(ec.frequency_from_inductance(0.001, 6.28319), 2), 1000.00)
 
+    def test_inductance_from_frequency(self):
+        self.assertEqual(round(ec.inductance_from_frequency(1000.0, 6.28319), 3), 0.001)
 
+    def test_reactance_inductive(self):
+        self.assertEqual(round(ec.reactance_inductive(1000, 0.001), 5), 6.28319)
+
+    def test_back_emf(self):
+        self.assertEqual(round(ec.back_emf(0.2, 2.0, 0.0, 0.01), 2), 40.00)
 
 if __name__ == '__main__':
     unittest.main()

@@ -172,10 +172,26 @@ def reactance_capacitive(frequency: float, capacitance: float) -> float:
     return _inverse_tau(frequency, capacitance)
 
 
+def frequency_from_inductance(inductance: float, inductive_reactance: float) -> float:
+    """Calculates frequency (Hertz) when inductance (Henries) and inductive reactance (Ohms) are known."""
+    return inductive_reactance / (2 * PI * inductance)
+
+
+def inductance_from_frequency(frequency: float, inductive_reactance: float) -> float:
+    """Calculates inductance (Henries) when frequency (Hertz) and inductive reactance (Ohms) are known."""
+    return inductive_reactance / (2 * PI * frequency)
+
+
 def reactance_inductive(frequency: float, inductance: float) -> float:
     """Calculates inductive reactance (Ohms) when frequency (Hertz) and inductance (Henries) are known."""
     return _tau(frequency, inductance)
 
+
+def back_emf(inductance: float, current_t1: float, current_t2: float, time: float) -> float:
+    """Calculates back EMF (Volts) when current stops flowing in an inductor. \n
+    Inputs: inductance (Henries); current_t1: current at time 1 (Amperes); current_t2: current at time 2 (Amperes);
+    time: the time it took from t1 to t2 (Seconds)"""
+    return -inductance * ((current_t2 - current_t1) / time)
 
 def wavelength(frequency: float) -> float:
     """Calculates wavelength (Meters) from frequency (Hertz)."""
