@@ -157,6 +157,7 @@ class Test_electronics_calculator(unittest.TestCase):
 
     def test_voltage_divider_c(self):
         self.assertEqual(round(ec.voltage_divider_c(5.0, 3000.0, 2000.0), 2), 3.33)
+        self.assertEqual(round(ec.voltage_divider_c(5.0, 0, 2000.0), 2), 0)
 
     def test_impedance_rc(self):
         self.assertEqual(round(ec.impedance_rc(22.91, 10.01), 2), 25.00)
@@ -166,9 +167,11 @@ class Test_electronics_calculator(unittest.TestCase):
 
     def test_impedance_rcl_phase_angle(self):
         self.assertEqual(round(ec.impedance_rcl_phase_angle(25, 20, 25), 2), 11.31)
+        self.assertEqual(round(ec.impedance_rcl_phase_angle(0, 20, 25), 2), 0)
 
     def test_gain(self):
         self.assertEqual(round(ec.gain(2, 4), 2), 2)
+        self.assertEqual(round(ec.gain(0, 4), 2), 0)
 
     def test_gain_db(self):
         self.assertEqual(round(ec.gain_db(2, 4), 2), 6.02)
@@ -189,6 +192,11 @@ class Test_electronics_calculator(unittest.TestCase):
     def test__inverse_tau(self):
         self.assertEqual(round(ec._inverse_tau(3, 4, 'test__inverse_tau'), 3), 0.013)
         self.assertEqual(round(ec._inverse_tau(3, 0, 'test__inverse_tau'), 3), 0)
+
+    def test__error_zero_division(self):
+        self.assertEqual(ec._error_zero_division('test__error_zero_division', 'single', 'test'), None)
+        self.assertEqual(ec._error_zero_division('test__error_zero_division', 'multiple'), None)
+        self.assertEqual(ec._error_zero_division('test__error_zero_division', 'tuple'), None)
 
 
 if __name__ == '__main__':

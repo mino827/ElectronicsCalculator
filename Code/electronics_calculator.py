@@ -462,17 +462,41 @@ def back_emf(inductance, current_t1, current_t2, time):
 # REACTANCE #
 # ========= #
 def reactance_inductive_fl(frequency, inductance):
-    """Calculates inductive reactance (Ohms) when frequency (Hertz) and inductance (Henries) are known."""
+    """Calculates inductive reactance when frequency and inductance are known.
+
+    Inputs:
+        frequency: f (Hertz)
+        inductance: L (Henries)
+
+    Output:
+        inductive_reactance: Xl (Ohms)
+    """
     return _tau(frequency, inductance)
 
 
 def reactance_capacitive_fc(frequency, capacitance):
-    """Calculates capacitive reactance (Ohms) when frequency (Hertz) and capacitance (Farads) are known."""
+    """Calculates capacitive reactance when frequency and capacitance are known.
+
+    Inputs:
+        frequency: f (Hertz)
+        capacitance: C (Farads)
+
+    Output:
+        capacitive_reactance: Xc (Ohms)
+    """
     return _inverse_tau(frequency, capacitance, 'reactance_capacitive_fc')
 
 
 def reactance_capacitive_zr(impedance, resistance):
-    """Calculates capacitive reactance: Xc (Ohms) when impedance: Z (Ohms) and resistance: R (Ohms) are known."""
+    """Calculates capacitive reactance when impedance and resistance are known.
+
+    Inputs:
+        impedance: Z (Ohms)
+        resistance: R (Ohms)
+
+    Output:
+        capacitive_reactance: Xc (Ohms)
+    """
     return math.sqrt(pow(impedance, 2) - pow(resistance, 2))
 
 
@@ -480,62 +504,146 @@ def reactance_capacitive_zr(impedance, resistance):
 # VOLTAGE (Sine wave) #
 # =================== #
 def voltage_rms_from_peak(peak_voltage):
-    """Calculates AC rms voltage: Vrms (Volts, sine) from peak voltage: Vp (Volts)."""
+    """Calculates rms voltage from peak voltage for AC sine waves.
+
+    Input:
+        peak_voltage: Vp (Volts)
+
+    Output:
+        rms_voltage: Vrms (Volts)
+    """
     return (1 / math.sqrt(2)) * peak_voltage
 
 
 def voltage_rms_from_peak_to_peak(peak_to_peak_voltage):
-    """Calculates AC rms voltage: Vrms (Volts, sine) from peak to peak voltage: Vp-p (Volts)."""
+    """Calculates rms voltage from peak to peak voltage for AC sine waves.
+
+    Input:
+        peak_to_peak_voltage: Vp-p (Volts)
+
+    Output:
+        rms_voltage: Vrms (Volts)
+    """
     return (1 / (2 * math.sqrt(2))) * peak_to_peak_voltage
 
 
 def voltage_rms_from_average(average_voltage):
-    """Calculates AC rms voltage: Vrms (Volts, sine) from average voltage: Vav (Volts)."""
+    """Calculates rms voltage from average voltage for AC sine waves.
+
+    Input:
+        average_voltage: Vav (Volts)
+
+    Output:
+        rms_voltage: Vrms (Volts)
+    """
     return (PI / (2 * math.sqrt(2))) * average_voltage
 
 
 def voltage_average_from_peak(peak_voltage):
-    """Calculates AC average voltage: Vav (Volts, sine) from peak voltage: Vp (Volts)."""
+    """Calculates average voltage from peak voltage for AC sine waves.
+
+    Input:
+        peak_voltage: Vp (Volts)
+
+    Output:
+        average_voltage: Vav (Volts)
+    """
     return (2 * peak_voltage) / PI
 
 
 def voltage_average_from_peak_to_peak(peak_to_peak_voltage):
-    """Calculates AC average voltage: Vav (Volts, sine) from peak to peak voltage: Vp-p (Volts)."""
+    """Calculates average voltage from peak to peak voltage for AC sine waves.
+
+    Input:
+        peak_to_peak_voltage: Vp-p (Volts)
+
+    Output:
+        average_voltage: Vav (Volts)
+    """
     return peak_to_peak_voltage / PI
 
 
 def voltage_average_from_rms(rms_voltage):
-    """Calculates AC average voltage: Vav (Volts, sine) from rms voltage: Vrms (Volts)."""
+    """Calculates average voltage from rms voltage for AC sine waves.
+
+    Input:
+        rms_voltage: Vrms (Volts)
+
+    Output:
+        average_voltage: Vav (Volts)
+    """
     return rms_voltage * ((2 * math.sqrt(2)) / PI)
 
 
 def voltage_peak_from_peak_to_peak(peak_to_peak_voltage):
-    """Calculates AC peak voltage: Vp (Volts, sine) from peak to peak voltage: Vp-p (Volts)."""
+    """Calculates peak voltage from peak to peak voltage for AC sine waves.
+
+    Input:
+        peak_to_peak_voltage: Vp-p (Volts)
+
+    Output:
+        peak_voltage: Vp (Volts)
+    """
     return peak_to_peak_voltage * 0.5
 
 
 def voltage_peak_from_rms(rms_voltage):
-    """Calculates AC peak voltage: Vp (Volts, sine) from rms voltage: Vrms (Volts)."""
+    """Calculates peak voltage from rms voltage for AC sine waves.
+
+    Input:
+        rms_voltage: Vrms (Volts)
+
+    Output:
+        peak_voltage: Vp (Volts)
+    """
     return rms_voltage * math.sqrt(2)
 
 
 def voltage_peak_from_average(average_voltage):
-    """Calculates AC peak voltage: Vp (Volts, sine) from average voltage (Volts)."""
+    """Calculates peak voltage from average voltage for AC sine waves.
+
+    Input:
+        average_voltage: Vav (Volts)
+
+    Output:
+        peak_voltage: Vp (Volts)
+    """
     return average_voltage * (PI / 2)
 
 
 def voltage_peak_to_peak_from_average(average_voltage):
-    """Calculates AC peak to peak voltage: Vp-p (Volts, sine) from average voltage: Vav (Volts)."""
+    """Calculates peak to peak voltage from average voltage for AC sine waves.
+
+    Input:
+        average_voltage: Vav (Volts)
+
+    Output:
+        peak_to_peak_voltage: Vp-p (Volts)
+    """
     return average_voltage * PI
 
 
 def voltage_peak_to_peak_from_rms(rms_voltage):
-    """Calculates AC peak to peak voltage: Vp-p (Volts, sine) from rms voltage: Vrms (Volts)."""
+    """Calculates peak to peak voltage from rms voltage for AC sine waves.
+
+    Input:
+        rms_voltage: Vrms (Volts)
+
+    Output:
+        peak_to_peak_voltage: Vp-p (Volts)
+    """
     return rms_voltage * (2 * math.sqrt(2))
 
 
 def voltage_peak_to_peak_from_peak(peak_voltage):
-    """Calculates AC peak to peak voltage: Vp-p (Volts, sine) from peak voltage: Vp (Volts)."""
+    """Calculates peak to peak voltage from peak voltage for AC sine waves.
+
+    Input:
+        peak_voltage: Vp (Volts)
+
+    Output:
+        peak_to_peak_voltage: Vp-p (Volts)
+    """
     return peak_voltage * 2
 
 
@@ -550,7 +658,15 @@ def voltage_divider_c(voltage_in, impedance, capacitive_reactance):
     Output:
         voltage_out: Vout (Volts)
     """
-    return voltage_in * (capacitive_reactance / impedance)
+    retval = 0
+
+    try:
+        retval = voltage_in * (capacitive_reactance / impedance)
+
+    except ZeroDivisionError:
+        _error_zero_division('voltage_divider_c', 'single', 'impedance')
+
+    return retval
 
 
 # ========= #
@@ -594,7 +710,15 @@ def impedance_rcl_phase_angle(resistance, capacitive_reactance, inductive_reacta
     Output:
         phase_angle: 𝜃 (Degrees)
     """
-    return math.degrees(math.atan((inductive_reactance - capacitive_reactance) / resistance))
+    retval = 0
+
+    try:
+        retval = math.degrees(math.atan((inductive_reactance - capacitive_reactance) / resistance))
+
+    except ZeroDivisionError:
+        _error_zero_division('impedance_rcl_phase_angle', 'single', 'resistance')
+
+    return retval
 
 
 # ======================== #
@@ -611,7 +735,15 @@ def gain(input_value, output_value):
     Output:
         gain: A (ratio)
     """
-    return output_value / input_value
+    retval = 0
+
+    try:
+        retval = output_value / input_value
+
+    except ZeroDivisionError:
+        _error_zero_division('gain', 'single', 'input_value')
+
+    return retval
 
 
 def gain_db(input_value, output_value):
@@ -649,7 +781,14 @@ def gain_db_power(input_power, output_power):
 # COMMON #
 # ====== #
 def _sums(items: tuple):
-    """Sums values in a tuple of numeric values."""
+    """Sums values in a tuple of numeric values.
+
+    Inputs:
+        items: any
+
+    Output:
+        sum: any
+    """
     total = 0.0
 
     for item in items:
@@ -659,28 +798,56 @@ def _sums(items: tuple):
 
 
 def _inverse_sums(items: tuple, calling_method):
-    """Inverts the sum of values in a tuple of numeric values."""
+    """Inverts the sum of values in a tuple of numeric values.
+
+    Inputs:
+        items: any
+        calling_method: any - the name of the method that calls this method so if there is an error we can name
+        which method caused the error.
+
+    Output:
+        inverse_sum: any
+    """
     retval = 0
 
-    for item in items:
-        try:
+    try:
+        for item in items:
             retval += (1 / item)
 
-        except ZeroDivisionError:
-            _error_zero_division(calling_method, 'tuple')
-            return 0
+    except ZeroDivisionError:
+        _error_zero_division(calling_method, 'tuple')
+        return 0
 
     return 1 / retval
 
 
 def _tau(item_a, item_b):
-    """Returns 2 * PI times the inputs."""
+    """Returns 2 * PI times the inputs.
+
+    Inputs:
+        items a: any
+        items b: any
+
+    Output:
+        tau'd inputs: any
+    """
     return 2 * PI * item_a * item_b
 
 
 def _inverse_tau(item_a, item_b, calling_method):
-    """Returns the inverse of 2 * PI times the inputs."""
+    """Returns the inverse of 2 * PI times the inputs.
+
+    Inputs:
+        items a: any
+        items b: any
+        calling_method: any - the name of the method that calls this method so if there is an error we can name
+        which method caused the error.
+
+    Output:
+        inverse tau'd inputs: any
+    """
     retval = 0
+
     tau = _tau(item_a, item_b)
 
     try:
@@ -688,7 +855,6 @@ def _inverse_tau(item_a, item_b, calling_method):
 
     except ZeroDivisionError:
         _error_zero_division(calling_method, 'multiple')
-        retval = 0
 
     return retval
 
@@ -704,8 +870,3 @@ def _error_zero_division(calling_method, message_type, bad_parameter=''):
         print("ERROR: method '{}' tuple item used as divisor cannot be zero.".format(calling_method))
 
     return
-
-
-# =============================== #
-# TODO: handle divide by 0 errors #
-# =============================== #
