@@ -41,9 +41,10 @@ class Test_electronics_calculator(unittest.TestCase):
 
     def test_voltage_divider_r(self):
         self.assertEqual(round(ec.voltage_divider_r(5.0, 1000.0, 2000.0), 2), 3.33)
+        self.assertEqual(round(ec.voltage_divider_r(5.0, 0, 0), 2), 0)
 
     def test_total_series_current(self):
-        self.assertEqual(round(ec.total_series_current((2.0, 2.0, 2.0, 2.0)), 2), 2.0)
+        self.assertEqual(round(ec.total_series_current((2.0, 2.0, 3.0, 2.0)), 2), 0)
 
     def test_total_series_resistance(self):
         self.assertEqual(round(ec.total_series_resistance((1000.0, 2000.0, 3000.0, 4000.0)), 2), 10000.0)
@@ -52,12 +53,9 @@ class Test_electronics_calculator(unittest.TestCase):
         self.assertEqual(round(ec.total_series_voltage((3.0, 2.0, 3.0, 4.0)), 2), 12.0)
 
     def test_total_series_capacitance(self):
-        self.assertEqual(
-            ec.total_series_capacitance(
-                (0.000001, 0.0000047, 0.0000000004)
-            ),
-            3.9980605153244808901213879224546e-10
-        )
+        self.assertEqual(ec.total_series_capacitance((0.000001, 0.0000047, 0.0000000004)
+                                                     ), 3.9980605153244808901213879224546e-10)
+        self.assertEqual(ec.total_series_capacitance((0.000001, 0, 0.0000000004)), 0)
 
     def test_total_series_inductance(self):
         self.assertEqual(ec.total_series_inductance((0.0001, 0.0047, 0.0003)), 0.0051)
@@ -67,21 +65,26 @@ class Test_electronics_calculator(unittest.TestCase):
 
     def test_total_parallel_resistance(self):
         self.assertEqual(round(ec.total_parallel_resistance((1000.0, 2000.0, 3000.0, 4000.0)), 2), 480.0)
+        self.assertEqual(round(ec.total_parallel_resistance((1000.0, 2000.0, 0, 4000.0)), 2), 0)
 
     def test_total_parallel_voltage(self):
-        self.assertEqual(round(ec.total_parallel_voltage((12.0, 9.0, 3.0, 7.5)), 2), 7.5)
+        self.assertEqual(round(ec.total_parallel_voltage((7.5, 7.5, 7.5, 7.5)), 2), 7.5)
+        self.assertEqual(round(ec.total_parallel_voltage((12.0, 9.0, 3.0, 7.5)), 2), 0)
 
     def test_total_parallel_capacitance(self):
         self.assertEqual(ec.total_parallel_capacitance((0.000004, 0.000003, 0.000002, 0.000001)), 0.00001)
 
     def test_total_parallel_inductance(self):
         self.assertEqual(round(ec.total_parallel_inductance((0.004, 0.003, 0.002, 0.001)), 5), 0.00048)
+        self.assertEqual(round(ec.total_parallel_inductance((0.004, 0, 0.002, 0.001)), 5), 0)
 
     def test_frequency_cxc(self):
         self.assertEqual(round(ec.frequency_cxc(0.0000001, 1591.55), 2), 1000.00)
+        self.assertEqual(round(ec.frequency_cxc(0, 1591.55), 2), 0)
 
     def test_capacitance_fxc(self):
         self.assertEqual(round(ec.capacitance_fxc(1.0, 100.00), 4), 0.0016)
+        self.assertEqual(round(ec.capacitance_fxc(1.0, 0), 4), 0)
 
     def test_reactance_capacitive_fc(self):
         self.assertEqual(round(ec.reactance_capacitive_fc(1000, 0.0000001), 2), 1591.55)
@@ -91,24 +94,30 @@ class Test_electronics_calculator(unittest.TestCase):
 
     def test_frequency_lxl(self):
         self.assertEqual(round(ec.frequency_lxl(0.001, 6.28319), 2), 1000.00)
+        self.assertEqual(round(ec.frequency_lxl(0, 6.28319), 2), 0)
 
     def test_inductance_fxl(self):
         self.assertEqual(round(ec.inductance_fxl(1000.0, 6.28319), 3), 0.001)
+        self.assertEqual(round(ec.inductance_fxl(0, 6.28319), 3), 0)
 
     def test_reactance_inductive_fl(self):
         self.assertEqual(round(ec.reactance_inductive_fl(1000, 0.001), 5), 6.28319)
 
     def test_back_emf(self):
         self.assertEqual(round(ec.back_emf(0.2, 2.0, 0.0, 0.01), 2), 40.00)
+        self.assertEqual(round(ec.back_emf(0.2, 2.0, 0.0, 0), 2), 0)
 
     def test_wavelength(self):
         self.assertEqual(round(ec.wavelength(2400000), 2), 125.00)
+        self.assertEqual(round(ec.wavelength(0), 2), 0)
 
     def test_frequency_wl(self):
         self.assertEqual(round(ec.frequency_wl(125.00), 2), 2400000.00)
+        self.assertEqual(round(ec.frequency_wl(0), 2), 0)
 
     def test_antenna_length_qw(self):
         self.assertEqual(round(ec.antenna_length_qw(2400000), 2), 31.25)
+        self.assertEqual(round(ec.antenna_length_qw(0), 2), 0)
 
     def test_voltage_rms_from_peak(self):
         self.assertEqual(round(ec.voltage_rms_from_peak(339.41), 2), 240.0)
@@ -171,13 +180,15 @@ class Test_electronics_calculator(unittest.TestCase):
         self.assertEqual(round(ec._sums((2, 4, 6)), 2), 12)
 
     def test__inverse_sums(self):
-        self.assertEqual(round(ec._inverse_sums((2, 4, 6)), 2), 1.09)
+        self.assertEqual(round(ec._inverse_sums((2, 4, 6), 'test__inverse_sums'), 2), 1.09)
+        self.assertEqual(round(ec._inverse_sums((2, 4, 0), 'test__inverse_sums'), 2), 0)
 
     def test__tau(self):
         self.assertEqual(round(ec._tau(3, 4), 3), 75.398)
 
     def test__inverse_tau(self):
-        self.assertEqual(round(ec._inverse_tau(3, 4), 3), 0.013)
+        self.assertEqual(round(ec._inverse_tau(3, 4, 'test__inverse_tau'), 3), 0.013)
+        self.assertEqual(round(ec._inverse_tau(3, 0, 'test__inverse_tau'), 3), 0)
 
 
 if __name__ == '__main__':

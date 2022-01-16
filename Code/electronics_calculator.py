@@ -19,74 +19,131 @@ PI = math.pi
 # ========= #
 # OHM'S LAW #
 # ========= #
-def power(current = 0.0, voltage = 0.0, resistance = 0.0):
-    """Calculates power based on any two available values using Ohm's Law. \n
-    Pass in any two of the three parameters: current (Amperes); voltage (Volts); resistance (Ohms)"""
+def power(current=0, voltage=0, resistance=0):
+    """Calculates power based on any two available values using Ohm's Law. Pass in any two of the three parameters.
+    The third (unsupplied) parameter will simply default to a value of 0.
 
-    if current > 0.0 and voltage > 0.0:
+    Inputs:
+        current: I (Amperes)
+        voltage: V (Volts)
+        resistance: R (Ohms)
+
+    Output:
+        power: P (Watts)
+    """
+    retval = 0
+
+    if current != 0 and voltage != 0:
         retval = current * voltage
 
-    elif current > 0.0 and resistance > 0.0:
+    elif current != 0 and resistance != 0:
         retval = pow(current, 2) * resistance
 
-    else:
+    elif voltage != 0 and resistance != 0:
         retval = pow(voltage, 2) / resistance
 
     return retval
 
 
-def current(power = 0.0, voltage = 0.0, resistance = 0.0):
-    """Calculates current based on any two available values using Ohm's Law. \n
-    Pass in any two of the three parameters: power (Watts); voltage (Volts); resistance (Ohms)"""
+def current(power=0, voltage=0, resistance=0):
+    """Calculates current based on any two available values using Ohm's Law. Pass in any two of the three parameters.
+    The third (unsupplied) parameter will simply default to a value of 0.
 
-    if power > 0.0 and voltage > 0.0:
+    Inputs:
+        power: P (Watts)
+        voltage: V (Volts)
+        resistance: R (Ohms)
+
+    Output:
+        current: I (Amperes)
+    """
+    retval = 0
+
+    if power != 0 and voltage != 0:
         retval = power / voltage
 
-    elif power > 0.0 and resistance > 0.0:
+    elif power != 0 and resistance != 0:
         retval = math.sqrt(power / resistance)
 
-    else:
+    elif voltage != 0 and resistance != 0:
         retval = voltage / resistance
 
     return retval
 
 
-def voltage(power = 0.0, current = 0.0, resistance = 0.0):
-    """Calculates voltage (Volts) based on any two available values using Ohm's Law. \n
-    Pass in any two of the three parameters: power (Watts); current (Amperes); resistance (Ohms)"""
+def voltage(power=0, current=0, resistance=0):
+    """Calculates voltage based on any two available values using Ohm's Law. Pass in any two of the three parameters.
+    The third (unsupplied) parameter will simply default to a value of 0.
 
-    if power > 0.0 and current > 0.0:
+    Inputs:
+        power: P (Watts)
+        current: I (Amperes)
+        resistance: R (Ohms)
+
+    Output:
+        voltage: V (Volts)
+    """
+    retval = 0
+
+    if power != 0 and current != 0:
         retval = power / current
 
-    elif power > 0.0 and resistance > 0.0:
+    elif power != 0 and resistance != 0:
         retval = math.sqrt(power * resistance)
 
-    else:
+    elif current != 0 and resistance != 0:
         retval = current * resistance
 
     return retval
 
 
-def resistance(power = 0.0, current = 0.0, voltage = 0.0):
-    """Calculates resistance (Ohms) based on any two available values using Ohm's Law. \n
-    Pass in any two of the three parameters: power (Watts); current (Amperes); voltage (Volts)"""
+def resistance(power=0, current=0, voltage=0):
+    """Calculates resistance based on any two available values using Ohm's Law. Pass in any two of the three parameters.
+    The third (unsupplied) parameter will simply default to a value of 0.
 
-    if power > 0.0 and current > 0.0:
+    Inputs:
+        power: P (Watts)
+        current: I (Amperes)
+        voltage: V (Volts)
+
+    Output:
+        resistance: R (Ohms)
+    """
+    retval = 0
+
+    if power != 0 and current != 0:
         retval = power / pow(current, 2)
 
-    elif power > 0.0 and voltage > 0.0:
+    elif power != 0 and voltage != 0:
         retval = pow(voltage, 2) / power
 
-    else:
+    elif voltage != 0 and current != 0:
         retval = voltage / current
 
     return retval
 
 
 def voltage_divider_r(voltage_in, resistance_1, resistance_2):
-    """Calculates output voltage: Vout (Volts) given input voltage: Vin (Volts) and two
-    resistor values: R1 & R2 (Ohms).\n\n This works when two resistors are used as a voltage divider."""
-    return voltage_in * (resistance_2 / (resistance_1 + resistance_2))
+    """Calculates output voltage when two resistors are used as a voltage divider. The output voltage will always
+    be lower than the input voltage.
+
+    Inputs:
+        voltage_in: Vin (Volts)
+        resistance_1: R1 (Ohms)
+        resistance_2: R2 (Ohms)
+
+    Output:
+        voltage_out: Vout (Volts)
+    """
+    retval = 0
+
+    try:
+        retval = voltage_in * (resistance_2 / (resistance_1 + resistance_2))
+
+    except ZeroDivisionError:
+        _error_zero_division('voltage_divider_r', 'single', "'resistance_1', 'resistance_2'")
+
+    return retval
 
 
 # ================================================================================================================= #
@@ -97,32 +154,72 @@ def voltage_divider_r(voltage_in, resistance_1, resistance_2):
 # SERIES CIRCUITS #
 # =============== #
 def total_series_current(currents: tuple):
-    """Takes a tuple of all current (Amperes) measurements in a
-    series circuit and returns the total current (Amperes)."""
-    return currents[-1]
+    """Takes a tuple of current measurements in a series circuit and returns the total current.
+
+    Inputs:
+        currents: I (Amperes)
+
+    Output:
+        total_current: I (Amperes)
+    """
+    retval = currents[0]
+
+    try:
+        for item in currents:
+            if item != retval:
+                raise ValueError
+
+    except ValueError:
+        print("ERROR: method 'total_series_current' all current measurements in a series circuit should be identical.")
+        retval = 0
+    return retval
 
 
 def total_series_resistance(resistances: tuple):
-    """Takes a tuple of all resistance measurements (Ohms) in a
-    series circuit and returns the total resistance (Ohms)."""
+    """Takes a tuple of resistance measurements in a series circuit and returns the total resistance.
+
+    Inputs:
+        resistances: R (Ohms)
+
+    Output:
+        total_resistance: R (Ohms)
+    """
     return _sums(resistances)
 
 
 def total_series_voltage(voltages: tuple):
-    """Takes a tuple of all voltage measurements (Volts) in a
-    series circuit and returns the total voltage (Volts)."""
+    """Takes a tuple of voltage measurements in a series circuit and returns the total voltage.
+
+    Inputs:
+        voltages: V (Volts)
+
+    Output:
+        total_voltage: V (Volts)
+    """
     return _sums(voltages)
 
 
 def total_series_capacitance(capacitances: tuple):
-    """Takes a tuple of all capacitance measurements (Farads) in a
-    series circuit and returns the total capacitance (Farads)."""
-    return _inverse_sums(capacitances)
+    """Takes a tuple of capacitance measurements in a series circuit and returns the total capacitance.
+
+    Inputs:
+        capacitances: C (Farads)
+
+    Output:
+        total_capacitance: C (Farads)
+    """
+    return _inverse_sums(capacitances, 'total_series_capacitance')
 
 
 def total_series_inductance(inductances: tuple):
-    """Takes a tuple of all inductance measurements (Henries) in a
-    series circuit and returns the total inductance (Henries)."""
+    """Takes a tuple of inductance measurements in a series circuit and returns the total inductance.
+
+    Inputs:
+        inductances: L (Henries)
+
+    Output:
+        total_inductance: L (Henries)
+    """
     return _sums(inductances)
 
 
@@ -130,33 +227,75 @@ def total_series_inductance(inductances: tuple):
 # PARALLEL CIRCUITS #
 # ================= #
 def total_parallel_current(currents: tuple):
-    """Takes a tuple of all current measurements (Amperes) in a
-    parallel circuit and returns the total current (Amperes)."""
+    """Takes a tuple of current measurements in a parallel circuit and returns the total current.
+
+    Inputs:
+        currents: I (Amperes)
+
+    Output:
+        total_current: I (Amperes)
+    """
     return _sums(currents)
 
 
 def total_parallel_resistance(resistances: tuple):
-    """Takes a tuple of all resistance measurements (Ohms) in a
-    parallel circuit and returns the total resistance (Ohms)."""
-    return _inverse_sums(resistances)
+    """Takes a tuple of resistance measurements in a parallel circuit and returns the total resistance.
+
+    Inputs:
+        resistances: R (Ohms)
+
+    Output:
+        total_resistance: R (Ohms)
+    """
+    return _inverse_sums(resistances, 'total_parallel_resistance')
 
 
 def total_parallel_voltage(voltages: tuple):
-    """Takes a tuple of all voltage measurements (Volts) in a
-    parallel circuit and returns the total voltage (Volts)."""
-    return voltages[-1]
+    """Takes a tuple of voltage measurements in a parallel circuit and returns the total voltage.
+
+    Inputs:
+        voltages: V (Volts)
+
+    Output:
+        total_voltage: V (Volts)
+    """
+    retval = voltages[0]
+
+    try:
+        for item in voltages:
+            if item != retval:
+                raise ValueError
+
+    except ValueError:
+        print("ERROR: method 'total_parallel_voltage' all voltage measurements in a parallel circuit "
+              "should be identical.")
+        retval = 0
+
+    return retval
 
 
 def total_parallel_capacitance(capacitances: tuple):
-    """Takes a tuple of all capacitance measurements (Farads) in a
-    parallel circuit and returns the total capacitance (Farads)."""
+    """Takes a tuple of capacitance measurements in a parallel circuit and returns the total capacitance.
+
+    Inputs:
+        capacitances: C (Farads)
+
+    Output:
+        total_capacitance: C (Farads)
+    """
     return _sums(capacitances)
 
 
 def total_parallel_inductance(inductances: tuple):
-    """Takes a tuple of all inductance measurements (Henries) in a
-    parallel circuit and returns the total inductance (Henries)."""
-    return _inverse_sums(inductances)
+    """Takes a tuple of inductance measurements in a parallel circuit and returns the total inductance.
+
+    Inputs:
+        inductances: L (Henries)
+
+    Output:
+        total_inductance: L (Henries)
+    """
+    return _inverse_sums(inductances, 'total_parallel_inductance')
 
 
 # ================================================================================================================= #
@@ -166,28 +305,90 @@ def total_parallel_inductance(inductances: tuple):
 # FREQUENCY #
 # ========= #
 def frequency_cxc(capacitance, capacitive_reactance):
-    """Calculates frequency (Hertz) when capacitance (Farads) and capacitive reactance (Ohms) are known."""
-    return _inverse_tau(capacitance, capacitive_reactance)
+    """Calculates frequency when capacitance and capacitive reactance are known.
+
+    Inputs:
+        capacitance: C (Farads)
+        capacitive_reactance: Xc (Ohms)
+
+    Output:
+        frequency: f (Hertz)
+    """
+    return _inverse_tau(capacitance, capacitive_reactance, 'frequency_cxc')
 
 
 def frequency_lxl(inductance, inductive_reactance):
-    """Calculates frequency (Hertz) when inductance (Henries) and inductive reactance (Ohms) are known."""
-    return inductive_reactance / (2 * PI * inductance)
+    """Calculates frequency when inductance and inductive reactance are known.
+
+    Inputs:
+        inductance: L (Henries)
+        inductive_reactance: Xl (Ohms)
+
+    Output:
+        frequency: f (Hertz)
+    """
+    retval = 0
+
+    try:
+        retval = inductive_reactance / (2 * PI * inductance)
+
+    except ZeroDivisionError:
+        _error_zero_division('frequency_lxl', 'single', 'inductance')
+
+    return retval
 
 
 def frequency_wl(wavelength):
-    """Calculates frequency (Hertz) from wavelength (Meters)."""
-    return SPEED_OF_LIGHT / wavelength
+    """Calculates frequency when wavelength is known.
+
+    Inputs:
+        wavelength: w (Meters)
+
+    Output:
+        frequency: f (Hertz)
+    """
+    retval = 0
+
+    try:
+        retval = SPEED_OF_LIGHT / wavelength
+
+    except ZeroDivisionError:
+        _error_zero_division('frequency_wl', 'single', 'wavelength')
+
+    return retval
 
 
 def wavelength(frequency):
-    """Calculates wavelength (Meters) from frequency (Hertz)."""
-    return SPEED_OF_LIGHT / frequency
+    """Calculates wavelength when frequency is known.
+
+    Inputs:
+        frequency: f (Hertz)
+
+    Output:
+        wavelength: w (Meters)
+    """
+    retval = 0
+
+    try:
+        retval = SPEED_OF_LIGHT / frequency
+
+    except ZeroDivisionError:
+        _error_zero_division('wavelength', 'single', 'frequency')
+
+    return retval
 
 
 def antenna_length_qw(frequency):
-    """Calculates optimal quarter wave antenna length (Meters) to receive input frequency (Hertz).\n
-    This is useful when designing dipole antennae"""
+    """Calculates optimal quarter wave antenna length to receive input frequency. This is useful when
+    designing dipole radio antennae.
+
+    Inputs:
+        frequency: f (Hertz)
+
+    Output:
+        quarter_wavelength: w (Meters)
+
+    """
     wl = wavelength(frequency)
 
     return wl / 4.0
@@ -197,24 +398,64 @@ def antenna_length_qw(frequency):
 # CAPACITANCE #
 # =========== #
 def capacitance_fxc(frequency, capacitive_reactance):
-    """Calculates capacitance (Farads) when frequency (Hertz) and capacitive reactance (Ohms) are known."""
-    return _inverse_tau(frequency, capacitive_reactance)
+    """Calculates capacitance when frequency and capacitive reactance are known.
+
+    Inputs:
+        frequency: f (Hertz)
+        capacitive_reactance: Xc (Ohms)
+
+    Output:
+        capacitance: C (Farads)
+    """
+    return _inverse_tau(frequency, capacitive_reactance, 'capacitance_fxc')
 
 
 # ========== #
 # INDUCTANCE #
 # ========== #
 def inductance_fxl(frequency, inductive_reactance):
-    """Calculates inductance: L (Henries) when frequency: F (Hertz) and inductive reactance: Xl (Ohms) are known."""
-    return inductive_reactance / (2 * PI * frequency)
+    """Calculates inductance when frequency and inductive reactance are known.
+
+    Inputs:
+        frequency: f (Hertz)
+        inductive_reactance: Xl (Ohms)
+
+    Output:
+        inductance: L (Henries)
+    """
+    retval = 0
+
+    try:
+        retval = inductive_reactance / (2 * PI * frequency)
+
+    except ZeroDivisionError:
+        _error_zero_division('inductance_fxl', 'single', 'frequency')
+
+    return retval
 
 
 def back_emf(inductance, current_t1, current_t2, time):
-    """Calculates back EMF (Volts) when current stops flowing in an inductor. Large voltages tend to get produced
-    which can damage components unless sufficient diodes are used to protect the circuits.\n
-    Inputs: inductance (Henries); current_t1: current at time 1 (Amperes); current_t2: current at time 2 (Amperes);
-    time: the time it took from t1 to t2 (Seconds)"""
-    return -inductance * ((current_t2 - current_t1) / time)
+    """Calculates back EMF when current stops flowing in an inductor. Large voltages tend to get produced
+    which can damage components unless sufficient protective diodes are used in the circuits.
+
+    Inputs:
+        inductance: L (Henries)
+        current_t1: It1 (Amperes) - Current at T1
+        current_t2: It2 (Amperes) - Current at T2
+        time: s (Seconds) - Elapsed time between T1 and T2
+
+    Output:
+        back_emf: V (Volts)
+    """
+    retval = 0
+
+    try:
+        retval = -inductance * ((current_t2 - current_t1) / time)
+
+    except ZeroDivisionError:
+        _error_zero_division('back_emf', 'single', 'time')
+
+    return retval
 
 
 # ========= #
@@ -227,7 +468,7 @@ def reactance_inductive_fl(frequency, inductance):
 
 def reactance_capacitive_fc(frequency, capacitance):
     """Calculates capacitive reactance (Ohms) when frequency (Hertz) and capacitance (Farads) are known."""
-    return _inverse_tau(frequency, capacitance)
+    return _inverse_tau(frequency, capacitance, 'reactance_capacitive_fc')
 
 
 def reactance_capacitive_zr(impedance, resistance):
@@ -417,14 +658,19 @@ def _sums(items: tuple):
     return total
 
 
-def _inverse_sums(items: tuple):
+def _inverse_sums(items: tuple, calling_method):
     """Inverts the sum of values in a tuple of numeric values."""
-    total = 0.0
+    retval = 0
 
     for item in items:
-        total += (1 / item)
+        try:
+            retval += (1 / item)
 
-    return 1 / total
+        except ZeroDivisionError:
+            _error_zero_division(calling_method, 'tuple')
+            return 0
+
+    return 1 / retval
 
 
 def _tau(item_a, item_b):
@@ -432,11 +678,33 @@ def _tau(item_a, item_b):
     return 2 * PI * item_a * item_b
 
 
-def _inverse_tau(item_a, item_b):
+def _inverse_tau(item_a, item_b, calling_method):
     """Returns the inverse of 2 * PI times the inputs."""
+    retval = 0
     tau = _tau(item_a, item_b)
 
-    return 1 / tau
+    try:
+        retval = 1 / tau
+
+    except ZeroDivisionError:
+        _error_zero_division(calling_method, 'multiple')
+        retval = 0
+
+    return retval
+
+
+def _error_zero_division(calling_method, message_type, bad_parameter=''):
+    if message_type == "single":
+        print("ERROR: method '{}', parameter '{}' cannot be zero.".format(calling_method, bad_parameter))
+
+    elif message_type == "multiple":
+        print("ERROR: method '{}', none of the parameters can be zero.".format(calling_method))
+
+    elif message_type == "tuple":
+        print("ERROR: method '{}' tuple item used as divisor cannot be zero.".format(calling_method))
+
+    return
+
 
 # =============================== #
 # TODO: handle divide by 0 errors #
