@@ -3,7 +3,7 @@
 # Version: 0.1                      #
 # Version date: 2022-01-14          #
 # Author: Mino Girimonti            #
-# License: GPL                      #
+# License: GPL v3.0                 #
 # ================================= #
 """This module provides definitions of scale units for common electronics calculations. \n
 The Enum values equate to the exponent for: (10 ** value)."""
