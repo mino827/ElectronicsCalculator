@@ -1,5 +1,5 @@
 # ================================= #
-# Module: ElectronicsCalculator.py #
+# Module: ElectronicsCalculator.py  #
 # Version: 0.1                      #
 # Version date: 2022-01-12          #
 # Author: Mino Girimonti            #

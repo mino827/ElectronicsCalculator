@@ -6,13 +6,22 @@
 # License: GPL v3.0                 #
 # ================================= #
 """This module provides definitions of scale units for common electronics calculations. \n
-The Enum values equate to the exponent for: (10 ** value)."""
+The Enum values equate to the order of magnitude."""
 
 from enum import Enum
 
 
 def scale_in(amount, factor: Enum):
-    """The scaled in value is used for the electronics calculations and ensures consistent unit scale."""
+    """The scaled in value is used for the electronics calculations and ensures consistent unit scale. It
+    scales (converts) into units needed for the actual calculation (i.e. converts 50 cm into 0.5 m).
+
+    Inputs:
+        amount: the unit amount
+        factor: the unit itself
+
+    Output:
+        scaled_amount: converted value needed for the calculation
+    """
     if factor is not None and factor.value != 1:
         retval = amount * pow(10, factor.value)
     else:
@@ -22,7 +31,15 @@ def scale_in(amount, factor: Enum):
 
 
 def scale_out(amount, factor: Enum):
-    """The scaled out values are used for display of results in any unit scale required."""
+    """The scaled out values are used for display of results in any unit scale required.
+
+    Inputs:
+        amount: the unit amount
+        factor: the unit itself
+
+    Output:
+        scaled_amount: converted value needed for display
+    """
     if factor is not None and factor.value != 1:
         retval = amount / pow(10, factor.value)
     else:
