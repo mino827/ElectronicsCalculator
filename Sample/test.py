@@ -29,3 +29,4 @@ frequency2 = ec.frequency_wl(input_wavelength2)                 # Hertz
 print("\n\nWithout scale_factors"
       "\nfrequency2 (Hz): %f" % frequency2)
 # ============================================================= #
+
