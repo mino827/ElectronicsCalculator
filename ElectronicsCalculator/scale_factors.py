@@ -57,7 +57,15 @@ class Capacitance(Enum):
     NANOFARADS = -9     # nF    = 1E-09
     PICOFARADS = -12    # pF    = 1E-12
 
+    
+# Inductance
+class Inductance(Enum):
+    """Defines the scale factors for Inductance (Henries - H)."""
+    HENRIES = 1          # H     = 1E+01
+    MILLIHENRIES = -3    # mH    = 1E-03
+    MICROHENRIES = -6    # µH    = 1E-06 
 
+    
 # Resistance
 class Resistance(Enum):
     """Defines the scale factors for resistance, reactance and impedance (Ohms - Ω)."""
