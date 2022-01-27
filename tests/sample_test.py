@@ -1,6 +1,4 @@
-from ElectronicsCalculator import electronics_calculator as ec
-from ElectronicsCalculator import scale_factors as sf
-
+from src.ElectronicsCalculator import electronics_calculator as ec, scale_factors as sf
 
 # ============================================================= #
 # Select appropriate Enum classes                               #

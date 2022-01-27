@@ -1,44 +1,44 @@
 import unittest
 
-from ElectronicsCalculator import electronics_calculator as ec
+from src.ElectronicsCalculator import electronics_calculator as ec
 
 
 class Test_electronics_calculator(unittest.TestCase):
     def test_power_ie(self):
-        self.assertEqual(round(ec.power(current=2.0, voltage=3.0), 2), 6.00)
+        self.assertEqual(round(ec.power_ie(2.0, 3.0), 2), 6.00)
 
     def test_power_ir(self):
-        self.assertEqual(round(ec.power(current=2.0, resistance=1.5), 2), 6.00)
+        self.assertEqual(round(ec.power_ir(2.0, 1.5), 2), 6.00)
 
     def test_power_er(self):
-        self.assertEqual(round(ec.power(resistance=1.5, voltage=3.0), 2), 6.00)
+        self.assertEqual(round(ec.power_er(3.0, 1.5), 2), 6.00)
 
     def test_current_pe(self):
-        self.assertEqual(round(ec.current(power=6.0, voltage=3.0), 2), 2.00)
+        self.assertEqual(round(ec.current_pe(6.0, 3.0), 2), 2.00)
 
     def test_current_pr(self):
-        self.assertEqual(round(ec.current(power=6.0, resistance=1.5), 2), 2.00)
+        self.assertEqual(round(ec.current_pr(6.0, 1.5), 2), 2.00)
 
     def test_current_er(self):
-        self.assertEqual(round(ec.current(resistance=1.5, voltage=3.0), 2), 2.00)
+        self.assertEqual(round(ec.current_er(3.0, 1.5), 2), 2.00)
 
     def test_voltage_pi(self):
-        self.assertEqual(round(ec.voltage(power=6.0, current=2.0), 2), 3.00)
+        self.assertEqual(round(ec.voltage_pi(6.0, 2.0), 2), 3.00)
 
     def test_voltage_pr(self):
-        self.assertEqual(round(ec.voltage(power=6.0, resistance=1.5), 2), 3.00)
+        self.assertEqual(round(ec.voltage_pr(6.0, 1.5), 2), 3.00)
 
     def test_voltage_ir(self):
-        self.assertEqual(round(ec.voltage(resistance=1.5, current=2.0), 2), 3.00)
+        self.assertEqual(round(ec.voltage_ir(2.0, 1.5), 2), 3.00)
 
     def test_resistance_pi(self):
-        self.assertEqual(round(ec.resistance(power=6.0, current=2.0), 2), 1.5)
+        self.assertEqual(round(ec.resistance_pi(6.0, 2.0), 2), 1.5)
 
     def test_resistance_pe(self):
-        self.assertEqual(round(ec.resistance(power=6.0, voltage=3.0), 2), 1.5)
+        self.assertEqual(round(ec.resistance_pe(6.0, 3.0), 2), 1.5)
 
-    def test_resistance_ei(self):
-        self.assertEqual(round(ec.resistance(voltage=3.0, current=2.0), 2), 1.5)
+    def test_resistance_ie(self):
+        self.assertEqual(round(ec.resistance_ie(2.0, 3.0), 2), 1.5)
 
     def test_voltage_divider_r(self):
         self.assertEqual(round(ec.voltage_divider_r(5.0, 1000.0, 2000.0), 2), 3.33)
@@ -184,20 +184,15 @@ class Test_electronics_calculator(unittest.TestCase):
         self.assertEqual(round(ec._sums((2, 4, 6)), 2), 12)
 
     def test__inverse_sums(self):
-        self.assertEqual(round(ec._inverse_sums((2, 4, 6), 'test__inverse_sums'), 2), 1.09)
-        self.assertEqual(round(ec._inverse_sums((2, 4, 0), 'test__inverse_sums'), 2), 0)
+        self.assertEqual(round(ec._inverse_sums((2, 4, 6)), 2), 1.09)
+        self.assertEqual(round(ec._inverse_sums((2, 4, 0)), 2), 0)
 
     def test__tau(self):
         self.assertEqual(round(ec._tau(3, 4), 3), 75.398)
 
     def test__inverse_tau(self):
-        self.assertEqual(round(ec._inverse_tau(3, 4, 'test__inverse_tau'), 3), 0.013)
-        self.assertEqual(round(ec._inverse_tau(3, 0, 'test__inverse_tau'), 3), 0)
-
-    def test__error_zero_division(self):
-        self.assertEqual(ec._error_zero_division('test__error_zero_division', 'single', 'test'), None)
-        self.assertEqual(ec._error_zero_division('test__error_zero_division', 'multiple'), None)
-        self.assertEqual(ec._error_zero_division('test__error_zero_division', 'tuple'), None)
+        self.assertEqual(round(ec._inverse_tau(3, 4), 3), 0.013)
+        self.assertEqual(round(ec._inverse_tau(3, 0), 3), 0)
 
 
 if __name__ == '__main__':
