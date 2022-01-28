@@ -20,7 +20,8 @@ PI = math.pi
 # OHM'S LAW #
 # ========= #
 def power_er(voltage, resistance):
-    """Calculates power based on voltage and resistance values using Ohm's Law.
+    """
+    Calculates power based on voltage and resistance values using Ohm's Law.
 
     Inputs:
     *   voltage: V (Volts)
@@ -33,16 +34,19 @@ def power_er(voltage, resistance):
 
     try:
         retval = pow(voltage, 2) / resistance
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Resistance cannot be 0")
+        raise ZeroDivisionError("Resistance cannot be 0")
 
     return retval
 
 
 def power_ie(current, voltage):
-    """Calculates power based on current and voltage values using Ohm's Law.
+    """
+    Calculates power based on current and voltage values using Ohm's Law.
 
     Inputs:
     *   current: I (Amperes)
@@ -55,14 +59,17 @@ def power_ie(current, voltage):
 
     try:
         retval = current * voltage
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 
 
 def power_ir(current, resistance):
-    """Calculates power based on current and resistance values using Ohm's Law. P
+    """
+    Calculates power based on current and resistance values using Ohm's Law. P
 
     Inputs:
         current: I (Amperes)
@@ -75,14 +82,17 @@ def power_ir(current, resistance):
 
     try:
         retval = pow(current, 2) * resistance
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 
 
 def current_pe(power, voltage):
-    """Calculates current based on power and voltage values using Ohm's Law.
+    """
+    Calculates current based on power and voltage values using Ohm's Law.
 
     Inputs:
         power: P (Watts)
@@ -95,16 +105,19 @@ def current_pe(power, voltage):
 
     try:
         retval = power / voltage
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Voltage cannot be 0")
+        raise ZeroDivisionError("Voltage cannot be 0")
 
     return retval
 
 
 def current_pr(power, resistance):
-    """Calculates current based on power and resistance values using Ohm's Law.
+    """
+    Calculates current based on power and resistance values using Ohm's Law.
 
     Inputs:
     *   power: P (Watts)
@@ -117,16 +130,19 @@ def current_pr(power, resistance):
 
     try:
         retval = math.sqrt(power / resistance)
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Resistance cannot be 0")
+        raise ZeroDivisionError("Resistance cannot be 0")
 
     return retval
 
 
 def current_er(voltage, resistance):
-    """Calculates current based on voltage and resistance values using Ohm's Law.
+    """
+    Calculates current based on voltage and resistance values using Ohm's Law.
 
     Inputs:
     *   voltage: V (Volts)
@@ -139,16 +155,19 @@ def current_er(voltage, resistance):
 
     try:
         retval = voltage / resistance
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Resistance cannot be 0")
+        raise ZeroDivisionError("Resistance cannot be 0")
 
     return retval
 
 
 def voltage_pi(power, current):
-    """Calculates voltage based on power and current values using Ohm's Law.
+    """
+    Calculates voltage based on power and current values using Ohm's Law.
 
     Inputs:
     *   power: P (Watts)
@@ -161,16 +180,19 @@ def voltage_pi(power, current):
 
     try:
         retval = power / current
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Current cannot be 0")
+        raise ZeroDivisionError("Current cannot be 0")
 
     return retval
 
 
 def voltage_pr(power, resistance):
-    """Calculates voltage based on power and resistance values using Ohm's Law.
+    """
+    Calculates voltage based on power and resistance values using Ohm's Law.
 
     Inputs:
     *   power: P (Watts)
@@ -183,14 +205,17 @@ def voltage_pr(power, resistance):
 
     try:
         retval = math.sqrt(power * resistance)
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 
 
 def voltage_ir(current, resistance):
-    """Calculates voltage based on current and resistance values using Ohm's Law.
+    """
+    Calculates voltage based on current and resistance values using Ohm's Law.
 
     Inputs:
     *   current: I (Amperes)
@@ -203,14 +228,17 @@ def voltage_ir(current, resistance):
 
     try:
         retval = current * resistance
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 
 
 def resistance_pe(power, voltage):
-    """Calculates resistance based on power and voltage values using Ohm's Law. P
+    """
+    Calculates resistance based on power and voltage values using Ohm's Law.
 
     Inputs:
     *   power: P (Watts)
@@ -223,16 +251,19 @@ def resistance_pe(power, voltage):
 
     try:
         retval = pow(voltage, 2) / power
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Power cannot be 0")
+        raise ZeroDivisionError("Power cannot be 0")
 
     return retval
 
 
 def resistance_pi(power, current):
-    """Calculates resistance based on power and current values using Ohm's Law.
+    """
+    Calculates resistance based on power and current values using Ohm's Law.
 
     Inputs:
     *   power: P (Watts)
@@ -245,16 +276,19 @@ def resistance_pi(power, current):
 
     try:
         retval = power / pow(current, 2)
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Current cannot be 0")
+        raise ZeroDivisionError("Current cannot be 0")
 
     return retval
 
 
 def resistance_ie(current, voltage):
-    """Calculates resistance based on current and voltage values using Ohm's Law.
+    """
+    Calculates resistance based on current and voltage values using Ohm's Law.
 
     Inputs:
     *   current: I (Amperes)
@@ -267,16 +301,19 @@ def resistance_ie(current, voltage):
 
     try:
         retval = voltage / current
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Current cannot be 0")
+        raise ZeroDivisionError("Current cannot be 0")
 
     return retval
 
 
 def voltage_divider_r(voltage_in, resistance_1, resistance_2):
-    """Calculates output voltage when two resistors are used as a voltage divider. The output voltage will always
+    """
+    Calculates output voltage when two resistors are used as a voltage divider. The output voltage will always
     be lower than the input voltage.
 
     Inputs:
@@ -291,11 +328,12 @@ def voltage_divider_r(voltage_in, resistance_1, resistance_2):
 
     try:
         retval = voltage_in * (resistance_2 / (resistance_1 + resistance_2))
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Both of the resistance values cannot be 0. At least one of them needs to be other than 0.")
-
+        raise ZeroDivisionError("At least one of the Resistance values needs to be something other than 0")
     return retval
 
 
@@ -307,7 +345,8 @@ def voltage_divider_r(voltage_in, resistance_1, resistance_2):
 # SERIES CIRCUITS #
 # =============== #
 def total_series_current(currents: tuple):
-    """Takes a tuple of current measurements in a series circuit and returns the total current.
+    """
+    Takes a tuple of current measurements in a series circuit and returns the total current.
 
     Inputs:
     *   currents: I (Amperes)
@@ -321,17 +360,17 @@ def total_series_current(currents: tuple):
         for item in currents:
             if item != retval:
                 raise ValueError
-    except TypeError:
-        print("Function is expecting a tuple of numeric values")
     except ValueError:
-        print("All current measurements in a series circuit should be identical.")
-        retval = 0
+        raise ValueError("All current measurements in a series circuit should be identical.")
+    except TypeError:
+        raise TypeError("Function is expecting a tuple of numeric values")
 
     return retval
 
 
 def total_series_resistance(resistances: tuple):
-    """Takes a tuple of resistance measurements in a series circuit and returns the total resistance.
+    """
+    Takes a tuple of resistance measurements in a series circuit and returns the total resistance.
 
     Inputs:
     *   resistances: R (Ohms)
@@ -339,11 +378,21 @@ def total_series_resistance(resistances: tuple):
     Output:
     *   total_resistance: R (Ohms)
     """
-    return _sums(resistances)
+    retval = 0
+
+    try:
+        retval = _sums(resistances)
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
+    except TypeError:
+        raise TypeError("Function is expecting a tuple of numeric values")
+
+    return retval
 
 
 def total_series_voltage(voltages: tuple):
-    """Takes a tuple of voltage measurements in a series circuit and returns the total voltage.
+    """
+    Takes a tuple of voltage measurements in a series circuit and returns the total voltage.
 
     Inputs:
     *   voltages: V (Volts)
@@ -351,11 +400,21 @@ def total_series_voltage(voltages: tuple):
     Output:
     *   total_voltage: V (Volts)
     """
-    return _sums(voltages)
+    retval = 0
+
+    try:
+       retval = _sums(voltages)
+    except ValueError:
+       raise ValueError("All parameters must be numeric")
+    except TypeError:
+        raise TypeError("Function is expecting a tuple of numeric values")
+
+    return retval
 
 
 def total_series_capacitance(capacitances: tuple):
-    """Takes a tuple of capacitance measurements in a series circuit and returns the total capacitance.
+    """
+    Takes a tuple of capacitance measurements in a series circuit and returns the total capacitance.
 
     Inputs:
     *   capacitances: C (Farads)
@@ -363,11 +422,20 @@ def total_series_capacitance(capacitances: tuple):
     Output:
     *   total_capacitance: C (Farads)
     """
-    return _inverse_sums(capacitances)
+    retval = 0
 
+    try:
+        retval = _inverse_sums(capacitances)
+    except TypeError:
+        raise TypeError("Function expected a tuple of numeric values")
+    except ZeroDivisionError:
+        raise ZeroDivisionError("None of the parameters can be 0")
+
+    return retval
 
 def total_series_inductance(inductances: tuple):
-    """Takes a tuple of inductance measurements in a series circuit and returns the total inductance.
+    """
+    Takes a tuple of inductance measurements in a series circuit and returns the total inductance.
 
     Inputs:
     *   inductances: L (Henries)
@@ -375,14 +443,24 @@ def total_series_inductance(inductances: tuple):
     Output:
     *   total_inductance: L (Henries)
     """
-    return _sums(inductances)
+    retval = 0
+
+    try:
+        retval = _sums(inductances)
+    except ValueError:
+        raise ValueError("At least one parameter must be entered")
+    except TypeError:
+        raise TypeError("Function expected a tuple of numeric values")
+
+    return retval
 
 
 # ================= #
 # PARALLEL CIRCUITS #
 # ================= #
 def total_parallel_current(currents: tuple):
-    """Takes a tuple of current measurements in a parallel circuit and returns the total current.
+    """
+    Takes a tuple of current measurements in a parallel circuit and returns the total current.
 
     Inputs:
     *   currents: I (Amperes)
@@ -390,11 +468,22 @@ def total_parallel_current(currents: tuple):
     Output:
     *   total_current: I (Amperes)
     """
-    return _sums(currents)
+
+    retval = 0
+
+    try:
+        retval = _sums(currents)
+    except ValueError:
+        raise ValueError("At least one parameter must be entered")
+    except TypeError:
+        raise TypeError("Function expected a tuple of numeric values")
+
+    return retval
 
 
 def total_parallel_resistance(resistances: tuple):
-    """Takes a tuple of resistance measurements in a parallel circuit and returns the total resistance.
+    """
+    Takes a tuple of resistance measurements in a parallel circuit and returns the total resistance.
 
     Inputs:
     *   resistances: R (Ohms)
@@ -402,11 +491,22 @@ def total_parallel_resistance(resistances: tuple):
     Output:
     *   total_resistance: R (Ohms)
     """
-    return _inverse_sums(resistances)
+    retval = 0
+
+    try:
+        retval = _inverse_sums(resistances)
+    except TypeError:
+        raise TypeError("Function expected a tuple of numeric values")
+    except ZeroDivisionError:
+        raise ZeroDivisionError("None of the parameters can be 0")
+
+    return retval
+
 
 
 def total_parallel_voltage(voltages: tuple):
-    """Takes a tuple of voltage measurements in a parallel circuit and returns the total voltage.
+    """
+    Takes a tuple of voltage measurements in a parallel circuit and returns the total voltage.
 
     Inputs:
     *   voltages: V (Volts)
@@ -421,14 +521,15 @@ def total_parallel_voltage(voltages: tuple):
             if item != retval:
                 raise ValueError
     except ValueError:
-        print("All voltage measurements in a parallel circuit should be identical.")
-        retval = 0
-
+        raise ValueError("All voltage measurements in a parallel circuit should be identical.")
+    except TypeError:
+        raise TypeError("One or more of the parameters you entered was not valid")
     return retval
 
 
 def total_parallel_capacitance(capacitances: tuple):
-    """Takes a tuple of capacitance measurements in a parallel circuit and returns the total capacitance.
+    """
+    Takes a tuple of capacitance measurements in a parallel circuit and returns the total capacitance.
 
     Inputs:
     *   capacitances: C (Farads)
@@ -440,7 +541,8 @@ def total_parallel_capacitance(capacitances: tuple):
 
 
 def total_parallel_inductance(inductances: tuple):
-    """Takes a tuple of inductance measurements in a parallel circuit and returns the total inductance.
+    """
+    Takes a tuple of inductance measurements in a parallel circuit and returns the total inductance.
 
     Inputs:
     *   inductances: L (Henries)
@@ -458,7 +560,8 @@ def total_parallel_inductance(inductances: tuple):
 # FREQUENCY #
 # ========= #
 def frequency_cxc(capacitance, capacitive_reactance):
-    """Calculates frequency when capacitance and capacitive reactance are known.
+    """
+    Calculates frequency when capacitance and capacitive reactance are known.
 
     Inputs:
     *   capacitance: C (Farads)
@@ -471,7 +574,8 @@ def frequency_cxc(capacitance, capacitive_reactance):
 
 
 def frequency_lxl(inductance, inductive_reactance):
-    """Calculates frequency when inductance and inductive reactance are known.
+    """
+    Calculates frequency when inductance and inductive reactance are known.
 
     Inputs:
     *   inductance: L (Henries)
@@ -484,6 +588,8 @@ def frequency_lxl(inductance, inductive_reactance):
 
     try:
         retval = inductive_reactance / (2 * PI * inductance)
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         print("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -493,7 +599,8 @@ def frequency_lxl(inductance, inductive_reactance):
 
 
 def frequency_wl(wavelength):
-    """Calculates frequency when wavelength is known.
+    """
+    Calculates frequency when wavelength is known.
 
     Inputs:
     *   wavelength: w (Meters)
@@ -505,6 +612,8 @@ def frequency_wl(wavelength):
 
     try:
         retval = SPEED_OF_LIGHT / wavelength
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         print("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -514,7 +623,8 @@ def frequency_wl(wavelength):
 
 
 def wavelength(frequency):
-    """Calculates wavelength when frequency is known.
+    """
+    Calculates wavelength when frequency is known.
 
     Inputs:
     *   frequency: f (Hertz)
@@ -526,6 +636,8 @@ def wavelength(frequency):
 
     try:
         retval = SPEED_OF_LIGHT / frequency
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         print("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -535,7 +647,8 @@ def wavelength(frequency):
 
 
 def antenna_length_qw(frequency):
-    """Calculates optimal quarter wave antenna length to receive input frequency. This is useful when
+    """
+    Calculates optimal quarter wave antenna length to receive input frequency. This is useful when
     designing dipole radio antennae.
 
     Inputs:
@@ -549,6 +662,8 @@ def antenna_length_qw(frequency):
     try:
         wl = wavelength(frequency)
         retval = wl / 4.0
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         print("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -561,7 +676,8 @@ def antenna_length_qw(frequency):
 # CAPACITANCE #
 # =========== #
 def capacitance_fxc(frequency, capacitive_reactance):
-    """Calculates capacitance when frequency and capacitive reactance are known.
+    """
+    Calculates capacitance when frequency and capacitive reactance are known.
 
     Inputs:
     *   frequency: f (Hertz)
@@ -577,7 +693,8 @@ def capacitance_fxc(frequency, capacitive_reactance):
 # INDUCTANCE #
 # ========== #
 def inductance_fxl(frequency, inductive_reactance):
-    """Calculates inductance when frequency and inductive reactance are known.
+    """
+    Calculates inductance when frequency and inductive reactance are known.
 
     Inputs:
     *   frequency: f (Hertz)
@@ -590,6 +707,8 @@ def inductance_fxl(frequency, inductive_reactance):
 
     try:
         retval = inductive_reactance / (2 * PI * frequency)
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         print("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -599,7 +718,8 @@ def inductance_fxl(frequency, inductive_reactance):
 
 
 def back_emf(inductance, current_t1, current_t2, time):
-    """Calculates back EMF when current stops flowing in an inductor. Large voltages tend to get produced
+    """
+    Calculates back EMF when current stops flowing in an inductor. Large voltages tend to get produced
     which can damage components unless sufficient protective diodes are used in the circuits.
 
     Inputs:
@@ -615,6 +735,8 @@ def back_emf(inductance, current_t1, current_t2, time):
 
     try:
         retval = -inductance * ((current_t2 - current_t1) / time)
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         print("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -627,7 +749,8 @@ def back_emf(inductance, current_t1, current_t2, time):
 # REACTANCE #
 # ========= #
 def reactance_inductive_fl(frequency, inductance):
-    """Calculates inductive reactance when frequency and inductance are known.
+    """
+    Calculates inductive reactance when frequency and inductance are known.
 
     Inputs:
     *   frequency: f (Hertz)
@@ -640,7 +763,8 @@ def reactance_inductive_fl(frequency, inductance):
 
 
 def reactance_capacitive_fc(frequency, capacitance):
-    """Calculates capacitive reactance when frequency and capacitance are known.
+    """
+    Calculates capacitive reactance when frequency and capacitance are known.
 
     Inputs:
     *   frequency: f (Hertz)
@@ -653,7 +777,8 @@ def reactance_capacitive_fc(frequency, capacitance):
 
 
 def reactance_capacitive_zr(impedance, resistance):
-    """Calculates capacitive reactance when impedance and resistance are known.
+    """
+    Calculates capacitive reactance when impedance and resistance are known.
 
     Inputs:
     *   impedance: Z (Ohms)
@@ -666,6 +791,8 @@ def reactance_capacitive_zr(impedance, resistance):
 
     try:
         retval = math.sqrt(pow(impedance, 2) - pow(resistance, 2))
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         print("One or more of the parameters you entered was not valid")
 
@@ -676,7 +803,8 @@ def reactance_capacitive_zr(impedance, resistance):
 # VOLTAGE (Sine wave) #
 # =================== #
 def voltage_rms_from_peak(peak_voltage):
-    """Calculates rms voltage from peak voltage for AC sine waves.
+    """
+    Calculates rms voltage from peak voltage for AC sine waves.
 
     Input:
     *   peak_voltage: Vp (Volts)
@@ -688,6 +816,8 @@ def voltage_rms_from_peak(peak_voltage):
 
     try:
         retval = (1 / math.sqrt(2)) * peak_voltage
+    except ValueError:
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         print("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -697,7 +827,8 @@ def voltage_rms_from_peak(peak_voltage):
 
 
 def voltage_rms_from_peak_to_peak(peak_to_peak_voltage):
-    """Calculates rms voltage from peak to peak voltage for AC sine waves.
+    """
+    Calculates rms voltage from peak to peak voltage for AC sine waves.
 
     Input:
     *   peak_to_peak_voltage: Vp-p (Volts)
@@ -718,7 +849,8 @@ def voltage_rms_from_peak_to_peak(peak_to_peak_voltage):
 
 
 def voltage_rms_from_average(average_voltage):
-    """Calculates rms voltage from average voltage for AC sine waves.
+    """
+    Calculates rms voltage from average voltage for AC sine waves.
 
     Input:
     *   average_voltage: Vav (Volts)
@@ -739,7 +871,8 @@ def voltage_rms_from_average(average_voltage):
 
 
 def voltage_average_from_peak(peak_voltage):
-    """Calculates average voltage from peak voltage for AC sine waves.
+    """
+    Calculates average voltage from peak voltage for AC sine waves.
 
     Input:
     *   peak_voltage: Vp (Volts)
@@ -758,7 +891,8 @@ def voltage_average_from_peak(peak_voltage):
 
 
 def voltage_average_from_peak_to_peak(peak_to_peak_voltage):
-    """Calculates average voltage from peak to peak voltage for AC sine waves.
+    """
+    Calculates average voltage from peak to peak voltage for AC sine waves.
 
     Input:
     *   peak_to_peak_voltage: Vp-p (Volts)
@@ -777,7 +911,8 @@ def voltage_average_from_peak_to_peak(peak_to_peak_voltage):
 
 
 def voltage_average_from_rms(rms_voltage):
-    """Calculates average voltage from rms voltage for AC sine waves.
+    """
+    Calculates average voltage from rms voltage for AC sine waves.
 
     Input:
     *   rms_voltage: Vrms (Volts)
@@ -796,7 +931,8 @@ def voltage_average_from_rms(rms_voltage):
 
 
 def voltage_peak_from_peak_to_peak(peak_to_peak_voltage):
-    """Calculates peak voltage from peak to peak voltage for AC sine waves.
+    """
+    Calculates peak voltage from peak to peak voltage for AC sine waves.
 
     Input:
     *   peak_to_peak_voltage: Vp-p (Volts)
@@ -815,7 +951,8 @@ def voltage_peak_from_peak_to_peak(peak_to_peak_voltage):
 
 
 def voltage_peak_from_rms(rms_voltage):
-    """Calculates peak voltage from rms voltage for AC sine waves.
+    """
+    Calculates peak voltage from rms voltage for AC sine waves.
 
     Input:
     *   rms_voltage: Vrms (Volts)
@@ -834,7 +971,8 @@ def voltage_peak_from_rms(rms_voltage):
 
 
 def voltage_peak_from_average(average_voltage):
-    """Calculates peak voltage from average voltage for AC sine waves.
+    """
+    Calculates peak voltage from average voltage for AC sine waves.
 
     Input:
     *   average_voltage: Vav (Volts)
@@ -853,7 +991,8 @@ def voltage_peak_from_average(average_voltage):
 
 
 def voltage_peak_to_peak_from_average(average_voltage):
-    """Calculates peak to peak voltage from average voltage for AC sine waves.
+    """
+    Calculates peak to peak voltage from average voltage for AC sine waves.
 
     Input:
     *   average_voltage: Vav (Volts)
@@ -872,7 +1011,8 @@ def voltage_peak_to_peak_from_average(average_voltage):
 
 
 def voltage_peak_to_peak_from_rms(rms_voltage):
-    """Calculates peak to peak voltage from rms voltage for AC sine waves.
+    """
+    Calculates peak to peak voltage from rms voltage for AC sine waves.
 
     Input:
     *   rms_voltage: Vrms (Volts)
@@ -891,7 +1031,8 @@ def voltage_peak_to_peak_from_rms(rms_voltage):
 
 
 def voltage_peak_to_peak_from_peak(peak_voltage):
-    """Calculates peak to peak voltage from peak voltage for AC sine waves.
+    """
+    Calculates peak to peak voltage from peak voltage for AC sine waves.
 
     Input:
     *   peak_voltage: Vp (Volts)
@@ -910,7 +1051,8 @@ def voltage_peak_to_peak_from_peak(peak_voltage):
 
 
 def voltage_divider_c(voltage_in, impedance, capacitive_reactance):
-    """Calculates output voltage when a capacitor is used as a voltage divider.
+    """
+    Calculates output voltage when a capacitor is used as a voltage divider.
 
     Inputs:
     *   voltage_in: Vin (Volts)
@@ -936,7 +1078,8 @@ def voltage_divider_c(voltage_in, impedance, capacitive_reactance):
 # IMPEDANCE #
 # ========= #
 def impedance_rc(resistance, capacitive_reactance):
-    """Calculate impedance in an RC (resistor capacitor) circuit.
+    """
+    Calculate impedance in an RC (resistor capacitor) circuit.
 
     Inputs:
     *   resistance: R (Ohms)
@@ -956,7 +1099,8 @@ def impedance_rc(resistance, capacitive_reactance):
 
 
 def impedance_rcl(resistance, capacitive_reactance, inductive_reactance):
-    """Calculate impedance in an RCL (resistor capacitor inductor) circuit.
+    """
+    Calculate impedance in an RCL (resistor capacitor inductor) circuit.
 
     Inputs:
     *   resistance: R (Ohms)
@@ -977,7 +1121,8 @@ def impedance_rcl(resistance, capacitive_reactance, inductive_reactance):
 
 
 def impedance_rcl_phase_angle(resistance, capacitive_reactance, inductive_reactance):
-    """Calculates the phase angle (Degrees) for impedance vectors in an RCL (resistor capacitor inductor) circuit.
+    """
+    Calculates the phase angle (Degrees) for impedance vectors in an RCL (resistor capacitor inductor) circuit.
 
     Inputs:
     *   resistance: R (Ohms)
@@ -1003,7 +1148,8 @@ def impedance_rcl_phase_angle(resistance, capacitive_reactance, inductive_reacta
 # AMPLIFIERS / ATTENUATORS #
 # ======================== #
 def gain(input_value, output_value):
-    """Calculates the gain ratio of either voltage, current or power.  If greater than 1 it is an amplification,
+    """
+    Calculates the gain ratio of either voltage, current or power.  If greater than 1 it is an amplification,
     and if less than 1 it is an attenuation.
 
     Inputs:
@@ -1026,7 +1172,8 @@ def gain(input_value, output_value):
 
 
 def gain_db(input_value, output_value):
-    """Calculates the dB gain of either voltage or current. If positive it is an amplification, and if negative it
+    """
+    Calculates the dB gain of either voltage or current. If positive it is an amplification, and if negative it
     is an attenuation.
 
     Inputs:
@@ -1050,7 +1197,8 @@ def gain_db(input_value, output_value):
 
 
 def gain_db_power(input_power, output_power):
-    """Calculates the dB gain of power. If positive it is an amplification, and if negative it is an attenuation.
+    """
+    Calculates the dB gain of power. If positive it is an amplification, and if negative it is an attenuation.
 
     Inputs:
         input_value: power: P (Watts)
@@ -1089,8 +1237,10 @@ def _sums(items: tuple):
     try:
         for item in items:
             retval += item
+    except ValueError:
+        raise ValueError("At least one parameter must be entered")
     except TypeError:
-        print("Function expected a tuple of numeric values")
+        raise TypeError("Function expected a tuple of numeric values")
 
     return retval
 
@@ -1113,9 +1263,9 @@ def _inverse_sums(items: tuple):
 
         retval = 1 / total
     except TypeError:
-        print("Function expected a tuple of numeric values")
+        raise TypeError("Function expected a tuple of numeric values")
     except ZeroDivisionError:
-        print("None of the parameters can be 0")
+        raise ZeroDivisionError("None of the parameters can be 0")
 
     return retval
 
