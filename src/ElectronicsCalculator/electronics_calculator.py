@@ -1,7 +1,5 @@
 # ================================= #
 # Module: ElectronicsCalculator.py  #
-# Version: 0.2                      #
-# Version date: 2022-01-12          #
 # Author: Mino Girimonti            #
 # License: GPL v3.0                 #
 # ================================= #
@@ -34,8 +32,6 @@ def power_er(voltage, resistance):
 
     try:
         retval = pow(voltage, 2) / resistance
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -58,9 +54,7 @@ def power_ie(current, voltage):
     retval = 0
 
     try:
-        retval = current * voltage
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
+        retval = (current * voltage) / 1    # Divide by 1 to force TypeError if nun-numeric parameters passed in
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
 
@@ -82,8 +76,6 @@ def power_ir(current, resistance):
 
     try:
         retval = pow(current, 2) * resistance
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
 
@@ -105,8 +97,6 @@ def current_pe(power, voltage):
 
     try:
         retval = power / voltage
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -130,8 +120,6 @@ def current_pr(power, resistance):
 
     try:
         retval = math.sqrt(power / resistance)
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -155,8 +143,6 @@ def current_er(voltage, resistance):
 
     try:
         retval = voltage / resistance
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -180,8 +166,6 @@ def voltage_pi(power, current):
 
     try:
         retval = power / current
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -205,8 +189,6 @@ def voltage_pr(power, resistance):
 
     try:
         retval = math.sqrt(power * resistance)
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
 
@@ -227,9 +209,7 @@ def voltage_ir(current, resistance):
     retval = 0
 
     try:
-        retval = current * resistance
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
+        retval = (current * resistance) / 1     # Force TypeError if non-numerics are passed in
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
 
@@ -251,8 +231,6 @@ def resistance_pe(power, voltage):
 
     try:
         retval = pow(voltage, 2) / power
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -276,8 +254,6 @@ def resistance_pi(power, current):
 
     try:
         retval = power / pow(current, 2)
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -301,8 +277,6 @@ def resistance_ie(current, voltage):
 
     try:
         retval = voltage / current
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
@@ -328,12 +302,11 @@ def voltage_divider_r(voltage_in, resistance_1, resistance_2):
 
     try:
         retval = voltage_in * (resistance_2 / (resistance_1 + resistance_2))
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
         raise ZeroDivisionError("At least one of the Resistance values needs to be something other than 0")
+
     return retval
 
 
@@ -354,12 +327,23 @@ def total_series_current(currents: tuple):
     Output:
     *   total_current: I (Amperes)
     """
-    retval = currents[0]
+    retval = 0
+    total = 0
+    count = 1
 
     try:
         for item in currents:
-            if item != retval:
+            total += item
+            average = total / count
+
+            if item != average:
                 raise ValueError
+
+            count += 1
+
+        retval = currents[0]
+    except IndexError:
+        raise IndexError("At least one input is required")
     except ValueError:
         raise ValueError("All current measurements in a series circuit should be identical.")
     except TypeError:
@@ -381,6 +365,9 @@ def total_series_resistance(resistances: tuple):
     retval = 0
 
     try:
+        if len(resistances) == 0:
+            raise ValueError
+
         retval = _sums(resistances)
     except ValueError:
         raise ValueError("All parameters must be numeric")
@@ -403,9 +390,12 @@ def total_series_voltage(voltages: tuple):
     retval = 0
 
     try:
-       retval = _sums(voltages)
+        if len(voltages) == 0:
+            raise ValueError
+
+        retval = _sums(voltages)
     except ValueError:
-       raise ValueError("All parameters must be numeric")
+        raise ValueError("All parameters must be numeric")
     except TypeError:
         raise TypeError("Function is expecting a tuple of numeric values")
 
@@ -425,13 +415,19 @@ def total_series_capacitance(capacitances: tuple):
     retval = 0
 
     try:
+        if len(capacitances) == 0:
+            raise ValueError
+
         retval = _inverse_sums(capacitances)
+    except ValueError:
+        raise ValueError("At least one parameter must be entered")
     except TypeError:
         raise TypeError("Function expected a tuple of numeric values")
     except ZeroDivisionError:
         raise ZeroDivisionError("None of the parameters can be 0")
 
     return retval
+
 
 def total_series_inductance(inductances: tuple):
     """
@@ -446,6 +442,9 @@ def total_series_inductance(inductances: tuple):
     retval = 0
 
     try:
+        if len(inductances) == 0:
+            raise ValueError
+
         retval = _sums(inductances)
     except ValueError:
         raise ValueError("At least one parameter must be entered")
@@ -472,6 +471,9 @@ def total_parallel_current(currents: tuple):
     retval = 0
 
     try:
+        if len(currents) == 0:
+            raise ValueError
+
         retval = _sums(currents)
     except ValueError:
         raise ValueError("At least one parameter must be entered")
@@ -494,6 +496,9 @@ def total_parallel_resistance(resistances: tuple):
     retval = 0
 
     try:
+        if len(resistances) == 0:
+            raise ValueError
+
         retval = _inverse_sums(resistances)
     except TypeError:
         raise TypeError("Function expected a tuple of numeric values")
@@ -501,7 +506,6 @@ def total_parallel_resistance(resistances: tuple):
         raise ZeroDivisionError("None of the parameters can be 0")
 
     return retval
-
 
 
 def total_parallel_voltage(voltages: tuple):
@@ -514,16 +518,28 @@ def total_parallel_voltage(voltages: tuple):
     Output:
     *   total_voltage: V (Volts)
     """
-    retval = voltages[0]
+    retval = 0
+    total = 0
+    count = 1
 
     try:
         for item in voltages:
-            if item != retval:
+            total += item  # will force a TypeError for any non-numerics in the tuple
+            average = total / count
+
+            if item != average:  # All individual numbers should equal the average if they are identical
                 raise ValueError
+
+            count += 1
+
+        retval = voltages[0]
+    except IndexError:
+        raise IndexError("At least one value is required")
     except ValueError:
-        raise ValueError("All voltage measurements in a parallel circuit should be identical.")
+        raise ValueError("All voltage measurements in a parallel circuit should be identical")
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
+
     return retval
 
 
@@ -537,7 +553,19 @@ def total_parallel_capacitance(capacitances: tuple):
     Output:
     *   total_capacitance: C (Farads)
     """
-    return _sums(capacitances)
+    retval = 0
+
+    try:
+        if len(capacitances) == 0:
+            raise ValueError
+
+        retval = _sums(capacitances)
+    except ValueError:
+        raise ValueError("At least one parameter is required")
+    except TypeError:
+        raise TypeError("Function expected a tuple of numeric values")
+
+    return retval
 
 
 def total_parallel_inductance(inductances: tuple):
@@ -550,7 +578,21 @@ def total_parallel_inductance(inductances: tuple):
     Output:
     *   total_inductance: L (Henries)
     """
-    return _inverse_sums(inductances)
+    retval = 0
+
+    try:
+        if len(inductances) == 0:
+            raise ValueError
+
+        retval = _inverse_sums(inductances)
+    except ValueError:
+        raise ValueError("At least one parameter is required")
+    except TypeError:
+        raise TypeError("Function expected a tuple of numeric values")
+    except ZeroDivisionError:
+        raise ZeroDivisionError("None of the parameters can be 0")
+
+    return retval
 
 
 # ================================================================================================================= #
@@ -570,7 +612,16 @@ def frequency_cxc(capacitance, capacitive_reactance):
     Output:
     *   frequency: f (Hertz)
     """
-    return _inverse_tau(capacitance, capacitive_reactance)
+    retval = 0
+
+    try:
+        retval = _inverse_tau(capacitance, capacitive_reactance)
+    except TypeError:
+        raise TypeError("One or more of the parameters you entered was not valid")
+    except ZeroDivisionError:
+        raise ZeroDivisionError("None of the parameters can be 0")
+
+    return retval
 
 
 def frequency_lxl(inductance, inductive_reactance):
@@ -588,12 +639,10 @@ def frequency_lxl(inductance, inductive_reactance):
 
     try:
         retval = inductive_reactance / (2 * PI * inductance)
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Inductance cannot be 0")
+        raise ZeroDivisionError("Inductance cannot be 0")
 
     return retval
 
@@ -612,12 +661,10 @@ def frequency_wl(wavelength):
 
     try:
         retval = SPEED_OF_LIGHT / wavelength
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
     except ZeroDivisionError:
-        print("Wavelength cannot be 0")
+        raise ZeroDivisionError("Wavelength cannot be 0")
 
     return retval
 
@@ -636,12 +683,10 @@ def wavelength(frequency):
 
     try:
         retval = SPEED_OF_LIGHT / frequency
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Frequency cannot be 0")
+        raise ZeroDivisionError("Frequency cannot be 0")
 
     return retval
 
@@ -662,12 +707,10 @@ def antenna_length_qw(frequency):
     try:
         wl = wavelength(frequency)
         retval = wl / 4.0
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Frequency cannot be 0")
+        raise ZeroDivisionError("Frequency cannot be 0")
 
     return retval
 
@@ -686,7 +729,16 @@ def capacitance_fxc(frequency, capacitive_reactance):
     Output:
     *   capacitance: C (Farads)
     """
-    return _inverse_tau(frequency, capacitive_reactance)
+    retval = 0
+
+    try:
+        retval = _inverse_tau(frequency, capacitive_reactance)
+    except TypeError:
+        raise TypeError("One or more of the parameters you entered was not valid")
+    except ZeroDivisionError:
+        raise ZeroDivisionError("None of the parameters can be 0")
+
+    return retval
 
 
 # ========== #
@@ -707,13 +759,10 @@ def inductance_fxl(frequency, inductive_reactance):
 
     try:
         retval = inductive_reactance / (2 * PI * frequency)
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Frequency cannot be 0")
-
+        raise ZeroDivisionError("Frequency cannot be 0")
     return retval
 
 
@@ -735,12 +784,10 @@ def back_emf(inductance, current_t1, current_t2, time):
 
     try:
         retval = -inductance * ((current_t2 - current_t1) / time)
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Time cannot be 0")
+        raise ZeroDivisionError("Time cannot be 0")
 
     return retval
 
@@ -759,7 +806,14 @@ def reactance_inductive_fl(frequency, inductance):
     Output:
     *   inductive_reactance: Xl (Ohms)
     """
-    return _tau(frequency, inductance)
+    retval = 0
+
+    try:
+        retval = _tau(frequency, inductance)
+    except TypeError:
+        raise TypeError("One or more of the parameters you entered was not valid")
+
+    return retval
 
 
 def reactance_capacitive_fc(frequency, capacitance):
@@ -773,7 +827,16 @@ def reactance_capacitive_fc(frequency, capacitance):
     Output:
     *   capacitive_reactance: Xc (Ohms)
     """
-    return _inverse_tau(frequency, capacitance)
+    retval = 0
+
+    try:
+        retval = _inverse_tau(frequency, capacitance)
+    except TypeError:
+        raise TypeError("One or more of the parameters you entered was not valid")
+    except ZeroDivisionError:
+        raise ZeroDivisionError("None of the parameters can be 0")
+
+    return retval
 
 
 def reactance_capacitive_zr(impedance, resistance):
@@ -791,10 +854,8 @@ def reactance_capacitive_zr(impedance, resistance):
 
     try:
         retval = math.sqrt(pow(impedance, 2) - pow(resistance, 2))
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 
@@ -816,12 +877,8 @@ def voltage_rms_from_peak(peak_voltage):
 
     try:
         retval = (1 / math.sqrt(2)) * peak_voltage
-    except ValueError:
-        raise ValueError("All parameters must be numeric")
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
-    except ZeroDivisionError:
-        print("Peak Voltage cannot be 0")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -841,9 +898,7 @@ def voltage_rms_from_peak_to_peak(peak_to_peak_voltage):
     try:
         retval = (1 / (2 * math.sqrt(2))) * peak_to_peak_voltage
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
-    except ZeroDivisionError:
-        print("Peak-to-Peak Voltage cannot be 0")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -863,9 +918,7 @@ def voltage_rms_from_average(average_voltage):
     try:
         retval = (PI / (2 * math.sqrt(2))) * average_voltage
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
-    except ZeroDivisionError:
-        print("Average Voltage cannot be 0")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -885,7 +938,7 @@ def voltage_average_from_peak(peak_voltage):
     try:
         retval = (2 * peak_voltage) / PI
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -905,7 +958,7 @@ def voltage_average_from_peak_to_peak(peak_to_peak_voltage):
     try:
         retval = peak_to_peak_voltage / PI
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -925,7 +978,7 @@ def voltage_average_from_rms(rms_voltage):
     try:
         retval = rms_voltage * ((2 * math.sqrt(2)) / PI)
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -945,7 +998,7 @@ def voltage_peak_from_peak_to_peak(peak_to_peak_voltage):
     try:
         retval = peak_to_peak_voltage * 0.5
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -965,7 +1018,7 @@ def voltage_peak_from_rms(rms_voltage):
     try:
         retval = rms_voltage * math.sqrt(2)
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -985,7 +1038,7 @@ def voltage_peak_from_average(average_voltage):
     try:
         retval = average_voltage * (PI / 2)
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -1005,7 +1058,7 @@ def voltage_peak_to_peak_from_average(average_voltage):
     try:
         retval = average_voltage * PI
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -1025,7 +1078,7 @@ def voltage_peak_to_peak_from_rms(rms_voltage):
     try:
         retval = rms_voltage * (2 * math.sqrt(2))
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -1043,9 +1096,12 @@ def voltage_peak_to_peak_from_peak(peak_voltage):
     retval = 0
 
     try:
-        retval = peak_voltage * 2
+        if abs(peak_voltage) >= 0:  # Forces TypeError for non-numerics
+            retval = peak_voltage * 2
+        else:
+            raise TypeError
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("The parameter you entered was not valid")
 
     return retval
 
@@ -1067,9 +1123,9 @@ def voltage_divider_c(voltage_in, impedance, capacitive_reactance):
     try:
         retval = voltage_in * (capacitive_reactance / impedance)
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Impedance cannot be 0")
+        raise ZeroDivisionError("Impedance cannot be 0")
 
     return retval
 
@@ -1093,7 +1149,7 @@ def impedance_rc(resistance, capacitive_reactance):
     try:
         retval = math.sqrt(pow(resistance, 2) + pow(capacitive_reactance, 2))
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 
@@ -1115,7 +1171,7 @@ def impedance_rcl(resistance, capacitive_reactance, inductive_reactance):
     try:
         retval = math.sqrt(pow(resistance, 2) + pow(inductive_reactance - capacitive_reactance, 2))
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 
@@ -1137,9 +1193,9 @@ def impedance_rcl_phase_angle(resistance, capacitive_reactance, inductive_reacta
     try:
         retval = math.degrees(math.atan((inductive_reactance - capacitive_reactance) / resistance))
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Resistance cannot be 0")
+        raise ZeroDivisionError("Resistance cannot be 0")
 
     return retval
 
@@ -1164,9 +1220,9 @@ def gain(input_value, output_value):
     try:
         retval = output_value / input_value
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Input Value cannot be 0")
+        raise ZeroDivisionError("Input Value cannot be 0")
 
     return retval
 
@@ -1189,9 +1245,9 @@ def gain_db(input_value, output_value):
         gain_ratio = gain(input_value, output_value)
         retval = 20 * math.log10(gain_ratio)
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Input Value cannot be 0")
+        raise ZeroDivisionError("Input Value cannot be 0")
 
     return retval
 
@@ -1213,9 +1269,9 @@ def gain_db_power(input_power, output_power):
         db = gain_db(input_power, output_power)
         retval = db / 2
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("Input Value cannot be 0")
+        raise ZeroDivisionError("Input Value cannot be 0")
 
     return retval
 
@@ -1224,7 +1280,8 @@ def gain_db_power(input_power, output_power):
 # COMMON #
 # ====== #
 def _sums(items: tuple):
-    """Sums values in a tuple of numeric values.
+    """
+    Sums values in a tuple of numeric values.
 
     Inputs:
     *   items: any
@@ -1235,6 +1292,9 @@ def _sums(items: tuple):
     retval = 0
 
     try:
+        if len(items) == 0:
+            raise ValueError
+
         for item in items:
             retval += item
     except ValueError:
@@ -1258,10 +1318,15 @@ def _inverse_sums(items: tuple):
     total = 0
 
     try:
+        if len(items) == 0:
+            raise ValueError
+
         for item in items:
             total += (1 / item)
 
         retval = 1 / total
+    except ValueError:
+        raise ValueError("At least one parameter must be entered")
     except TypeError:
         raise TypeError("Function expected a tuple of numeric values")
     except ZeroDivisionError:
@@ -1285,7 +1350,7 @@ def _tau(item_a, item_b):
     try:
         retval = 2 * PI * item_a * item_b
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 
@@ -1306,8 +1371,8 @@ def _inverse_tau(item_a, item_b):
         tau = _tau(item_a, item_b)
         retval = 1 / tau
     except TypeError:
-        print("One or more of the parameters you entered was not valid")
+        raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
-        print("None of the parameters can be 0")
+        raise ZeroDivisionError("None of the parameters can be 0")
 
     return retval

@@ -1,7 +1,5 @@
 # ================================= #
 # Module: scale_factors.py          #
-# Version: 0.2                      #
-# Version date: 2022-01-14          #
 # Author: Mino Girimonti            #
 # License: GPL v3.0                 #
 # ================================= #

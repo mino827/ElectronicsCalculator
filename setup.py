@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='ElectronicsCalculator',
-    version='0.2',
+    version='0.3',
     packages=['ElectronicsCalculator'],
     url='https://github.com/mino827/ElectronicsCalculator',
     license='GPL v3.0',
