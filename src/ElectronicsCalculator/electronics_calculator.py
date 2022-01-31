@@ -1,8 +1,8 @@
-# ================================= #
-# Module: ElectronicsCalculator.py  #
-# Author: Mino Girimonti            #
-# License: GPL v3.0                 #
-# ================================= #
+# ================================== #
+# Module: electronics_calculator.py  #
+# Author: Mino Girimonti             #
+# License: GPL v3.0                  #
+# ================================== #
 """This module provides methods to perform common electronics calculations."""
 
 import math
@@ -54,7 +54,7 @@ def power_ie(current, voltage):
     retval = 0
 
     try:
-        retval = (current * voltage) / 1    # Divide by 1 to force TypeError if nun-numeric parameters passed in
+        retval = (current * voltage) / 1  # Divide by 1 to force TypeError if nun-numeric parameters passed in
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
 
@@ -209,7 +209,7 @@ def voltage_ir(current, resistance):
     retval = 0
 
     try:
-        retval = (current * resistance) / 1     # Force TypeError if non-numerics are passed in
+        retval = (current * resistance) / 1  # Force TypeError if non-numerics are passed in
     except TypeError:
         raise TypeError("One or more of the parameters you entered was not valid")
 
@@ -281,6 +281,27 @@ def resistance_ie(current, voltage):
         raise TypeError("One or more of the parameters you entered was not valid")
     except ZeroDivisionError:
         raise ZeroDivisionError("Current cannot be 0")
+
+    return retval
+
+
+def resistance_zxc(impedance, capacitive_reactance):
+    """
+    Calculates resistance based on impedance and capacitive reactance values.
+
+    Inputs:
+    *   impedance: Z (Ohms)
+    *   capacitive_reactance: Xc (Ohms)
+
+    Output:
+    *   resistance: R (Ohms)
+    """
+    retval = 0
+
+    try:
+        retval = math.sqrt(pow(impedance, 2) - pow(capacitive_reactance, 2))
+    except TypeError:
+        raise TypeError("One or more of the parameters you entered was not valid")
 
     return retval
 

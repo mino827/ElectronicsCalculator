@@ -72,6 +72,11 @@ class Test_electronics_calculator(unittest.TestCase):
         self.assertRaises(TypeError, ec.resistance_ie, 12, 'a')
         self.assertRaises(TypeError, ec.resistance_ie, 2)
 
+    def test_resistance_zxc(self):
+        self.assertEqual(round(ec.resistance_zxc(25.0, 10.0), 2), 22.91)
+        self.assertRaises(TypeError, ec.resistance_ie, 12, 'a')
+        self.assertRaises(TypeError, ec.resistance_ie, 2)
+
     def test_voltage_divider_r(self):
         self.assertEqual(round(ec.voltage_divider_r(5.0, 1000.0, 2000.0), 2), 3.33)
         self.assertRaises(ZeroDivisionError, ec.voltage_divider_r, 5.0, 0, 0)
